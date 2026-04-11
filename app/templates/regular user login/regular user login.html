@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Command Center - Create Account</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-card">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i data-lucide="user-plus"></i>
+                </div>
+            </div>
+            
+            <h1 class="title">CREATE ACCOUNT</h1>
+            <p class="subtitle">FINANCIAL COMMAND CENTER</p>
+            
+            <form class="signup-form">
+                <div class="form-group">
+                    <label for="fullname">FULL NAME</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="user" class="input-icon"></i>
+                        <input type="text" id="fullname" placeholder="John Doe">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">EMAIL ADDRESS</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="mail" class="input-icon"></i>
+                        <input type="email" id="email" placeholder="user@example.com">
+                        <i data-lucide="hexagon" class="input-action"></i>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">PASSWORD</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="lock" class="input-icon"></i>
+                        <input type="password" id="password" placeholder="Create a password">
+                        <i data-lucide="eye" class="input-action toggle-password"></i>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm-password">CONFIRM PASSWORD</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="lock" class="input-icon"></i>
+                        <input type="password" id="confirm-password" placeholder="Confirm your password">
+                        <i data-lucide="eye" class="input-action toggle-password"></i>
+                    </div>
+                </div>
+                
+                <button type="submit" class="signup-btn">
+                    <i data-lucide="shield-check"></i>
+                    <span>CREATE ACCOUNT</span>
+                </button>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <p class="login-text">
+                Already have an account? <a href="user-login.html" class="login-link">Sign In</a>
+            </p>
+            
+            <a href="admin-login.html" class="admin-access">Administrator Access</a>
+        </div>
+        
+        <p class="secure-portal">SECURE REGISTRATION PORTAL</p>
+    </div>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+
+        // Toggle password visibility for both password fields
+        document.querySelectorAll('.toggle-password').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const input = this.closest('.input-wrapper').querySelector('input');
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                this.setAttribute('data-lucide', type === 'password' ? 'eye' : 'eye-off');
+                lucide.createIcons();
+            });
+        });
+    </script>
+</body>
+</html>

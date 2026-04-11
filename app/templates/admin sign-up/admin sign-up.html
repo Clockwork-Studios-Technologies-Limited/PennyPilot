@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<div class="background-grid"></div>
+<div class="gradient-overlay"></div>
+
+ 
+    <div class="page">
+        <!-- Background gradient orbs -->
+        <div class="bg-orb bg-orb--left"></div>
+        <div class="bg-orb bg-orb--right"></div>
+        
+        <!-- Back button -->
+        <a href="#" class="back-button">
+            <i data-lucide="arrow-left"></i>
+            <span>User Signup</span>
+        </a>
+        
+        <!-- Main card -->
+        <div class="card">
+            <!-- Logo -->
+            <div class="logo">
+                <i data-lucide="shield"></i>
+            </div>
+            
+            <!-- Header -->
+            <div class="header">
+                <h1 class="title">ADMIN REGISTRATION</h1>
+                <p class="subtitle">REQUEST ADMINISTRATIVE ACCESS</p>
+            </div>
+            
+            <!-- Form -->
+            <form class="form">
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label class="form-label">FULL NAME</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="user" class="input-icon"></i>
+                        <input type="text" class="form-input" placeholder="Admin Name">
+                    </div>
+                </div>
+                
+                <!-- Email Address -->
+                <div class="form-group">
+                    <label class="form-label">EMAIL ADDRESS</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="mail" class="input-icon"></i>
+                        <input type="email" class="form-input" placeholder="admin@example.com">
+                        <i data-lucide="hexagon" class="input-icon input-icon--right" style="color: #a855f7;"></i>
+                    </div>
+                </div>
+                
+                <!-- Password -->
+                <div class="form-group">
+                    <label class="form-label">PASSWORD</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="lock" class="input-icon"></i>
+                        <input type="password" class="form-input" placeholder="At least 6 characters">
+                        <button type="button" class="toggle-password">
+                            <i data-lucide="eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label class="form-label">CONFIRM PASSWORD</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="lock" class="input-icon"></i>
+                        <input type="password" class="form-input" placeholder="Re-enter your password">
+                        <button type="button" class="toggle-password">
+                            <i data-lucide="eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn">
+                    <i data-lucide="shield-check"></i>
+                    <span>CREATE ADMIN ACCOUNT</span>
+                </button>
+            </form>
+            
+            <!-- Divider -->
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <!-- Footer link -->
+            <div class="footer">
+                <p>Already have admin access? <a href="#" class="signin-link">Admin Login</a></p>
+            </div>
+        </div>
+        
+        <!-- Bottom text -->
+        <p class="bottom-text">SECURE ADMIN REGISTRATION PORTAL</p>
+    </div>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

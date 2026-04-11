@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Command Center - Sign In</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i data-lucide="arrow-right-to-line"></i>
+                </div>
+            </div>
+            
+            <h1 class="title">WELCOME BACK</h1>
+            <p class="subtitle">FINANCIAL COMMAND CENTER</p>
+            
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="email">EMAIL ADDRESS</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="mail" class="input-icon"></i>
+                        <input type="email" id="email" placeholder="user@example.com">
+                        <i data-lucide="settings" class="input-action"></i>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">PASSWORD</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="lock" class="input-icon"></i>
+                        <input type="password" id="password" placeholder="Enter your password">
+                        <i data-lucide="eye" class="input-action toggle-password"></i>
+                    </div>
+                </div>
+                
+                <button type="submit" class="signin-btn">
+                    <i data-lucide="log-in"></i>
+                    <span>SIGN IN</span>
+                </button>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <p class="signup-text">
+                Don't have an account? <a href="user-signup.html" class="signup-link">Create Account</a>
+            </p>
+            
+            <a href="admin-login.html" class="admin-access">Administrator Access</a>
+        </div>
+        
+        <p class="secure-portal">SECURE ACCESS PORTAL</p>
+    </div>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+
+        // Toggle password visibility
+        document.querySelectorAll('.toggle-password').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const input = this.closest('.input-wrapper').querySelector('input');
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                this.setAttribute('data-lucide', type === 'password' ? 'eye' : 'eye-off');
+                lucide.createIcons();
+            });
+        });
+    </script>
+</body>
+</html>

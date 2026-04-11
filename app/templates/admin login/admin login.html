@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Access</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="background-grid"></div>
+    <div class="gradient-overlay"></div>
+    
+    <a href="#" class="back-link">
+        <i data-lucide="arrow-left"></i>
+        <span>User Login</span>
+    </a>
+    
+    <main class="login-container">
+        <div class="login-card">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i data-lucide="shield"></i>
+                </div>
+            </div>
+            
+            <h1 class="title">ADMIN ACCESS</h1>
+            <p class="subtitle">ADMINISTRATIVE CONTROL PANEL</p>
+            
+            <form class="login-form">
+                <div class="form-group">
+                    <label for="email">ADMIN EMAIL</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="mail" class="input-icon left"></i>
+                        <input type="email" id="email" placeholder="admin@example.com">
+                        <i data-lucide="hexagon" class="input-icon right hexagon-icon"></i>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">ADMIN PASSWORD</label>
+                    <div class="input-wrapper">
+                        <i data-lucide="lock" class="input-icon left"></i>
+                        <input type="password" id="password" placeholder="Enter admin password">
+                        <i data-lucide="eye" class="input-icon right eye-icon"></i>
+                    </div>
+                </div>
+                
+                <button type="submit" class="signin-btn">
+                    <i data-lucide="shield"></i>
+                    <span>ADMIN LOGIN</span>
+                </button>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <p class="request-access">
+                Need admin access? <a href="#">Request Admin Account</a>
+            </p>
+        </div>
+        
+        <p class="footer-text">RESTRICTED ADMINISTRATIVE ACCESS</p>
+    </main>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
