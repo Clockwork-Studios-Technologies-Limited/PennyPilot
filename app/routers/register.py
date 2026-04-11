@@ -11,8 +11,8 @@ from . import router, templates
 @router.get("/register", response_class=HTMLResponse)
 async def register_view(request: Request):
     return templates.TemplateResponse(
-        request=request, 
-        name="register.html",
+        request=request,
+        name="Auth/user-sign-up.html",
     )
 
 # Action route (performs an action)

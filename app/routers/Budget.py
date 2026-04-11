@@ -15,12 +15,11 @@ async def budget_view(
 ):
     return templates.TemplateResponse(
         request=request,
-        name="budget.html",
+        name="App/budget.html",
         context={
             "user": user
         }
     )
-
 
 @api_router.get("/budgets")
 async def get_budgets(user: AuthDep, db: SessionDep):

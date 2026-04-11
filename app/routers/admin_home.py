@@ -10,12 +10,10 @@ from . import router, templates
 async def admin_home_view(
     request: Request,
     user: AdminDep,
-    db:SessionDep
+    db: SessionDep
 ):
     return templates.TemplateResponse(
-        request=request, 
-        name="admin.html",
-        context={
-            "user": user
-        }
+        request=request,
+        name="Admin/admin-panel.html",
+        context={"user": user}
     )

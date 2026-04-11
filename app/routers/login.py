@@ -11,8 +11,15 @@ from app.config import get_settings
 @router.get("/login", response_class=HTMLResponse)
 async def login_view(request: Request):
     return templates.TemplateResponse(
-        request=request, 
-        name="login.html",
+        request=request,
+        name="Auth/user-login.html",
+    )
+    
+@router.get("/register", response_class=HTMLResponse)
+async def register_view(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="Auth/user-sign-up.html",
     )
 
 #Action route responsible for actually logging in the person
@@ -30,7 +37,11 @@ async def login_action_ajax(
         flash(request, "Incorrect username or password", "danger")
         return RedirectResponse(url=request.url_for("login_view"), status_code=status.HTTP_303_SEE_OTHER)
     
-    response = RedirectResponse(url=request.url_for("index_view"), status_code=status.HTTP_303_SEE_OTHER)
+    # response = RedirectResponse(url=request.url_for("index_view"), status_code=status.HTTP_303_SEE_OTHER)
+    response = RedirectResponse(
+    url=request.url_for("dashboard_view"),
+    status_code=status.HTTP_303_SEE_OTHER
+)
     response.set_cookie(
         key="access_token",
         value=access_token,
@@ -39,3 +50,18 @@ async def login_action_ajax(
         secure=True,
     )
     return response
+
+@router.get("/admin/login", response_class=HTMLResponse)
+async def admin_login_view(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="Auth/admin-login.html",
+    )
+
+
+@router.get("/admin/register", response_class=HTMLResponse)
+async def admin_register_view(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="Auth/admin-sign-up.html",
+    )

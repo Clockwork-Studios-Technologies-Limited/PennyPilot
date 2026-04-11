@@ -6,16 +6,50 @@ from app.dependencies.auth import AuthDep, IsUserLoggedIn, get_current_user, is_
 from . import router, templates
 
 
-@router.get("/app", response_class=HTMLResponse)
-async def user_home_view(
+@router.get("/dashboard", response_class=HTMLResponse)
+async def dashboard_view(
     request: Request,
     user: AuthDep,
-    db:SessionDep
+    db: SessionDep
 ):
     return templates.TemplateResponse(
-        request=request, 
-        name="app.html",
-        context={
-            "user": user
-        }
+        request=request,
+        name="App/dashboard.html",
+        context={"user": user}
+    )
+    
+@router.get("/expenses", response_class=HTMLResponse)
+async def expenses_view(
+    request: Request,
+    user: AuthDep,
+    db: SessionDep
+):
+    return templates.TemplateResponse(
+        request=request,
+        name="App/expenses.html",
+        context={"user": user}
+    )
+
+@router.get("/subscriptions", response_class=HTMLResponse)
+async def subscriptions_view(
+    request: Request,
+    user: AuthDep,
+    db: SessionDep
+):
+    return templates.TemplateResponse(
+        request=request,
+        name="App/subscriptions.html",
+        context={"user": user}
+    )
+    
+@router.get("/reports", response_class=HTMLResponse)
+async def reports_view(
+    request: Request,
+    user: AuthDep,
+    db: SessionDep
+):
+    return templates.TemplateResponse(
+        request=request,
+        name="App/reports.html",
+        context={"user": user}
     )

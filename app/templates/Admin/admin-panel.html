@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - User Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <i data-lucide="shield" class="logo-icon"></i>
+            </div>
+            <div class="header-title">
+                <h1>ADMIN DASHBOARD</h1>
+                <p>USER MANAGEMENT CONTROL PANEL</p>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-profile">
+                <div class="avatar">O</div>
+                <div class="user-info">
+                    <span class="user-name">a</span>
+                    <span class="user-email">a@a.com</span>
+                </div>
+            </div>
+            <button class="logout-btn">
+                <i data-lucide="log-out"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="stats-cards">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <i data-lucide="users" class="stat-icon"></i>
+                    <span class="stat-label">TOTAL USERS</span>
+                </div>
+                <span class="stat-value">15</span>
+            </div>
+            <div class="stat-card very-safe">
+                <span class="stat-label">VERY SAFE</span>
+                <span class="stat-value">4</span>
+            </div>
+            <div class="stat-card stable">
+                <span class="stat-label">STABLE</span>
+                <span class="stat-value">4</span>
+            </div>
+            <div class="stat-card risky">
+                <span class="stat-label">RISKY</span>
+                <span class="stat-value">3</span>
+            </div>
+            <div class="stat-card critical">
+                <span class="stat-label">CRITICAL</span>
+                <span class="stat-value">2</span>
+            </div>
+        </div>
+
+        <div class="user-management">
+            <div class="management-header">
+                <div class="management-title">
+                    <div class="title-row">
+                        <i data-lucide="users" class="title-icon"></i>
+                        <h2>USER MANAGEMENT</h2>
+                    </div>
+                    <p>Manage user financial risk tags and accounts</p>
+                </div>
+                <span class="total-users">15 total users</span>
+            </div>
+
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>USER</th>
+                        <th>EMAIL</th>
+                        <th>BURN RATE</th>
+                        <th>JOINED</th>
+                        <th>RISK TAG</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="user-cell">
+                            <div class="user-avatar">J</div>
+                            <span class="user-name">John Doe</span>
+                        </td>
+                        <td>john@example.com</td>
+                        <td><span class="burn-rate">$3,200</span> <span class="per-month">/mo</span></td>
+                        <td>2026-01-15</td>
+                        <td><span class="risk-tag stable-tag"><i data-lucide="shield-check"></i> STABLE</span></td>
+                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td class="user-cell">
+                            <div class="user-avatar">J</div>
+                            <span class="user-name">Jane Smith</span>
+                        </td>
+                        <td>jane@example.com</td>
+                        <td><span class="burn-rate">$1,850</span> <span class="per-month">/mo</span></td>
+                        <td>2026-02-10</td>
+                        <td><span class="risk-tag very-safe-tag"><i data-lucide="shield-check"></i> VERY SAFE</span></td>
+                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td class="user-cell">
+                            <div class="user-avatar">B</div>
+                            <span class="user-name">Bob Johnson</span>
+                        </td>
+                        <td>bob@example.com</td>
+                        <td><span class="burn-rate">$4,500</span> <span class="per-month">/mo</span></td>
+                        <td>2026-03-05</td>
+                        <td><span class="risk-tag risky-tag"><i data-lucide="alert-triangle"></i> RISKY</span></td>
+                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td class="user-cell">
+                            <div class="user-avatar">A</div>
+                            <span class="user-name">Alice Williams</span>
+                        </td>
+                        <td>alice@example.com</td>
+                        <td><span class="burn-rate">$6,800</span> <span class="per-month">/mo</span></td>
+                        <td>2026-03-20</td>
+                        <td><span class="risk-tag critical-tag"><i data-lucide="alert-circle"></i> CRITICAL</span></td>
+                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td class="user-cell">
+                            <div class="user-avatar">C</div>
+                            <span class="user-name">Charlie Brown</span>
+                        </td>
+                        <td>charlie@example.com</td>
+                        <td><span class="burn-rate">$2,900</span> <span class="per-month">/mo</span></td>
+                        <td>2026-03-25</td>
+                        <td><span class="risk-tag no-tag"><i data-lucide="tag"></i> NO TAG</span></td>
+                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td class="user-cell">
+                            <div class="user-avatar">D</div>
+                            <span class="user-name">David Chen</span>
+                        </td>
+                        <td>david@example.com</td>
+                        <td><span class="burn-rate">$3,100</span> <span class="per-month">/mo</span></td>
+                        <td>2025-11-08</td>
+                        <td><span class="risk-tag stable-tag"><i data-lucide="shield-check"></i> STABLE</span></td>
+                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td class="user-cell">
+                            <div class="user-avatar">E</div>
+                            <span class="user-name">Emma Wilson</span>
+                        </td>
+                        <td>emma@example.com</td>
+                        <td><span class="burn-rate">$1,650</span> <span class="per-month">/mo</span></td>
+                        <td>2025-12-12</td>
+                        <td><span class="risk-tag very-safe-tag"><i data-lucide="shield-check"></i> VERY SAFE</span></td>
+                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td class="user-cell">
+                            <div class="user-avatar">F</div>
+                            <span class="user-name">Frank Miller</span>
+                        </td>
+                        <td>frank@example.com</td>
+                        <td><span class="burn-rate">$5,200</span> <span class="per-month">/mo</span></td>
+                        <td>2026-01-20</td>
+                        <td><span class="risk-tag risky-tag"><i data-lucide="alert-triangle"></i> RISKY</span></td>
+                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td class="user-cell">
+                            <div class="user-avatar">G</div>
+                            <span class="user-name">Grace Lee</span>
+                        </td>
+                        <td>grace@example.com</td>
+                        <td><span class="burn-rate">$2,750</span> <span class="per-month">/mo</span></td>
+                        <td>2026-02-18</td>
+                        <td><span class="risk-tag stable-tag"><i data-lucide="shield-check"></i> STABLE</span></td>
+                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td class="user-cell">
+                            <div class="user-avatar">H</div>
+                            <span class="user-name">Henry Davis</span>
+                        </td>
+                        <td>henry@example.com</td>
+                        <td><span class="burn-rate">$7,500</span> <span class="per-month">/mo</span></td>
+                        <td>2026-03-10</td>
+                        <td><span class="risk-tag critical-tag"><i data-lucide="alert-circle"></i> CRITICAL</span></td>
+                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination">
+                <span class="page-info">Page 1 of 2</span>
+                <div class="pagination-right">
+                    <span class="showing">1-10 of 15</span>
+                    <button class="next-btn"><i data-lucide="chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

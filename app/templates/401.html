@@ -1,80 +1,145 @@
-{% extends "base.html" %}
-{% block title %}Session Expired{% endblock %}
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>401 - Unauthorized</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+   
 
-{% block internal_css %}
-<style>
-    body {
-        background-color: #f8f9fa;
-    }
+    <style>
+        body {
+            margin: 0;
+            font-family: var(--font-family, 'Segoe UI', sans-serif);
+            background-color: var(--bg-dark, #0b0f19);
+            color: var(--text-main, #fff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
 
-    .page-container {
-        min-height: 100vh;
-    }
+        .auth-wrapper {
+            width: 100%;
+            max-width: 900px;
+            padding: 2rem;
+        }
 
-    .card-custom {
-        border: none;
-        border-radius: 1rem;
-        overflow: hidden;
-    }
+        .auth-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--bg-panel, rgba(20,25,40,0.6));
+            border: 1px solid var(--border-color, rgba(255,255,255,0.08));
+            border-radius: 14px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
 
-    .left-section {
-        background: linear-gradient(135deg, #0d6efd, #0dcaf0);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        padding: 3rem;
-    }
+        .auth-left {
+            background: linear-gradient(135deg, rgba(239,68,68,0.15), rgba(139,92,246,0.15));
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-    .left-section img {
-        max-width: 100%;
-        height: auto;
-    }
+        .auth-left h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
 
-    .right-section {
-        padding: 3rem;
-    }
+        .auth-left p {
+            color: var(--text-muted, #94a3b8);
+        }
 
-    .btn-primary {
-        border-radius: 0.5rem;
-    }
-</style>
-{% endblock %}
+        .auth-right {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
+        .error-code {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-red, #ef4444);
+            margin-bottom: 0.5rem;
+        }
 
-{% block content %}
+        .error-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
 
-<div class="container page-container d-flex align-items-center justify-content-center">
-    <div class="card shadow-lg card-custom col-lg-10">
-        <div class="row g-0">
+        .error-text {
+            color: var(--text-muted, #94a3b8);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+        }
 
-            <div class="col-lg-6 d-none d-lg-flex left-section">
-                <div class="text-center">
-                    <h2 class="mt-4 fw-bold">Session Expired</h2>
-                    <p class="lead">For security reasons, please sign in again.</p>
-                </div>
+        .btn-primary {
+            background: var(--accent-blue, #3b82f6);
+            color: #fff;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(59,130,246,0.3);
+        }
+
+        @media (max-width: 768px) {
+            .auth-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .auth-left {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-wrapper">
+        <div class="auth-panel">
+
+            <!-- LEFT VISUAL -->
+            <div class="auth-left">
+                <h2>Session Expired</h2>
+                <p>For security reasons, your session has ended. Please sign in again to continue.</p>
             </div>
 
-            <div class="col-lg-6 bg-white">
-                <div class="right-section d-flex flex-column justify-content-center h-100">
-                    <h1 class="display-5 fw-bold text-danger mb-3">401</h1>
-                    <h3 class="fw-semibold mb-3">Unauthorized</h3>
-                    <p class="text-muted mb-4">
-                        Your session has expired or you do not have permission to access this page.
-                        Please log in again to continue.
-                    </p>
+            <!-- RIGHT CONTENT -->
+            <div class="auth-right">
+                <div class="error-code">401</div>
+                <div class="error-title">Unauthorized</div>
 
-                    <div class="d-grid">
-                        <a href="{{url_for('login_view')}}" class="btn btn-primary btn-lg">
-                            Return to Login
-                        </a>
-                    </div>
+                <div class="error-text">
+                    Your session has expired or you don’t have permission to access this page.
+                    Please log in again to continue.
                 </div>
+
+                <a href="/login" class="btn-primary">Return to Login</a>
             </div>
 
         </div>
     </div>
-</div>
 
-{% endblock %}
+</body>
+</html>
