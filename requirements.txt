@@ -1,0 +1,16 @@
+fastapi[all]
+uvicorn[standard]
+asyncpg
+httpx
+itsdangerous
+jinja2
+psycopg2-binary
+pyjwt
+python-jose
+sqlmodel
+typer
+tabulate
+pwdlib[argon2]
+pytest
+pytest-asyncio
+ruff
