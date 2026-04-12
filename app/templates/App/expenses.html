@@ -4,36 +4,90 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Finance Tracker - Expenses</title>
-
-  <link rel="stylesheet" href="/static/css/expenses-style.css"/>
+  <link rel="stylesheet" href="/app/static/css/expenses-style.css" />
 </head>
 <body>
 
-  <header>
-    <div class="logo">
-      <div class="logo-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-        </svg>
+<!-- ===== DASHBOARD NAVIGATION BAR (identical) ===== -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+      </svg>
+    </div>
+    <div class="logo-text">
+      <h1>FINANCE TRACKER</h1>
+      <span>Financial Command Center</span>
+    </div>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="Dashboard.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        Dashboard
+      </a></li>
+      <li><a href="#" class="active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        Expenses
+      </a></li>
+      <li><a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+        Subscriptions
+      </a></li>
+      <li><a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+        Budgets
+      </a></li>
+      <li><a href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        Reports
+      </a></li>
+      <li class="logout-btn"><a href="/auth/logout" class="delete-btn">Logout</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- MAIN LAYOUT: left column (300px) + right content -->
+<div class="main-layout">
+  <!-- LEFT COLUMN: Monthly Income + Quick Stats (dashboard style) -->
+  <aside class="left-col">
+    <!-- Income Card (identical to dashboard) -->
+    <div class="panel income-card">
+      <div class="income-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+        <span style="font-weight: 600; letter-spacing: 0.5px;">MONTHLY INCOME</span>
       </div>
-      <div class="logo-text">
-        <h1>FINANCE TRACKER</h1>
-        <span>Financial Command Center</span>
+      <div class="income-sub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width:14px; height:14px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+        PRIMARY SOURCE
       </div>
+      <div class="income-amount">$5,000</div>
+      <button class="btn-update" id="updateIncomeBtn">UPDATE INCOME</button>
     </div>
 
-    <nav>
-      <ul>
-        <li><a href="/Dashboard.html">Dashboard</a></li>
-        <li><a href="#" class="active">Expenses</a></li>
-        <li><a href="#">Budgets</a></li>
-      </ul>
-    </nav>
-  </header>
+    <!-- Quick Stats (exactly as dashboard: same spacing, font, and colors) -->
+    <div class="panel quick-stats">
+      <div class="panel-header">Quick Stats</div>
+      <div class="stat-row">
+        <span class="stat-label">Transactions</span>
+        <span class="stat-value">15</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Active Subs</span>
+        <span class="stat-value num-purple">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Budget Items</span>
+        <span class="stat-value num-yellow">10</span>
+      </div>
+    </div>
+  </aside>
 
-  <div class="page-shell">
+  <!-- RIGHT CONTENT: original expenses page (unchanged) -->
+  <div class="right-content">
     <div class="page-intro">
       <div>
         <h2 class="page-title">Expenses</h2>
@@ -59,18 +113,15 @@
     <div class="content-grid">
       <div class="panel">
         <div class="panel-header blue">Add New Expense</div>
-
         <div class="form-grid">
           <div class="field-group">
             <label for="name">Expense Name</label>
             <input type="text" id="name" placeholder="Expense Name">
           </div>
-
           <div class="field-group">
             <label for="amount">Amount</label>
             <input type="number" id="amount" placeholder="Amount">
           </div>
-
           <div class="field-group">
             <label for="category">Category</label>
             <select id="category">
@@ -80,13 +131,11 @@
               <option>Other</option>
             </select>
           </div>
-
           <div class="field-group">
             <label for="date">Date</label>
             <input type="date" id="date">
           </div>
         </div>
-
         <div class="actions">
           <button class="btn btn-save">Save</button>
           <button class="btn btn-cancel">Cancel</button>
@@ -95,7 +144,6 @@
 
       <div class="panel">
         <div class="panel-header red">Recent Expenses</div>
-
         <div class="expense-list">
           <div class="expense-row">
             <div class="expense-meta">
@@ -110,7 +158,6 @@
               <span class="expense-amount">$125.00</span>
             </div>
           </div>
-
           <div class="expense-row">
             <div class="expense-meta">
               <div class="expense-dot dot-transport"></div>
@@ -124,7 +171,6 @@
               <span class="expense-amount">$80.00</span>
             </div>
           </div>
-
           <div class="expense-row">
             <div class="expense-meta">
               <div class="expense-dot dot-entertainment"></div>
@@ -138,7 +184,6 @@
               <span class="expense-amount">$42.50</span>
             </div>
           </div>
-
           <div class="expense-row">
             <div class="expense-meta">
               <div class="expense-dot dot-other"></div>
@@ -152,7 +197,6 @@
               <span class="expense-amount">$240.00</span>
             </div>
           </div>
-
           <div class="expense-row">
             <div class="expense-meta">
               <div class="expense-dot dot-food"></div>
@@ -167,7 +211,6 @@
             </div>
           </div>
         </div>
-
         <div class="pagination">
           <span class="page-info">Page 1 of 3</span>
           <div class="page-buttons">
@@ -178,6 +221,20 @@
       </div>
     </div>
   </div>
+</div>
 
+<script>
+  document.getElementById('updateIncomeBtn')?.addEventListener('click', () => {
+    alert("Income update feature (demo) – would open a modal to change $5,000.");
+  });
+  document.querySelectorAll('nav ul li a:not([href="Dashboard.html"]):not([href="/auth/logout"])').forEach(link => {
+    if (link.getAttribute('href') === '#') {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        alert("Module in development – stay tuned!");
+      });
+    }
+  });
+</script>
 </body>
 </html>
