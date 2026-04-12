@@ -2,10 +2,10 @@ import uvicorn
 from fastapi import FastAPI, Request, status
 from starlette.middleware import Middleware
 from starlette.middleware.sessions import SessionMiddleware
-from app.routers import templates, static_files, router, api_router
+from app.routers import auth, templates, static_files, router, api_router
 from app.config import get_settings
 from contextlib import asynccontextmanager
-
+from app.routers import auth
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -23,6 +23,7 @@ app = FastAPI(middleware=[
 
 app.include_router(router)
 app.include_router(api_router)
+app.include_router(auth.router)
 app.mount("/static", static_files, name="static")
 
 @app.exception_handler(status.HTTP_401_UNAUTHORIZED)
