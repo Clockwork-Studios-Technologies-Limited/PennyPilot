@@ -6,7 +6,7 @@ from app.dependencies.auth import AdminDep, IsUserLoggedIn, get_current_user, is
 from . import router, templates
 
 
-@router.get("/admin", response_class=HTMLResponse)
+@router.get("/admin/dashboard", response_class=HTMLResponse)
 async def admin_home_view(
     request: Request,
     user: AdminDep,

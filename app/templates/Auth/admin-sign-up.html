@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Registration</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/css/admin-sign-up-style.css">
 </head>
 <body>
 
@@ -38,13 +38,13 @@
             </div>
             
             <!-- Form -->
-            <form class="form">
+            <form class="form" action="/auth/admin/register" method="post">
                 <!-- Full Name -->
                 <div class="form-group">
                     <label class="form-label">FULL NAME</label>
                     <div class="input-wrapper">
                         <i data-lucide="user" class="input-icon"></i>
-                        <input type="text" class="form-input" placeholder="Admin Name">
+                        <input type="text" name="username" class="form-input" placeholder="Admin Name">
                     </div>
                 </div>
                 
@@ -53,7 +53,7 @@
                     <label class="form-label">EMAIL ADDRESS</label>
                     <div class="input-wrapper">
                         <i data-lucide="mail" class="input-icon"></i>
-                        <input type="email" class="form-input" placeholder="admin@example.com">
+                        <input type="email" name="email" class="form-input" placeholder="admin@example.com">
                         <i data-lucide="hexagon" class="input-icon input-icon--right" style="color: #a855f7;"></i>
                     </div>
                 </div>
@@ -63,7 +63,7 @@
                     <label class="form-label">PASSWORD</label>
                     <div class="input-wrapper">
                         <i data-lucide="lock" class="input-icon"></i>
-                        <input type="password" class="form-input" placeholder="At least 6 characters">
+                        <input type="password" name="password" class="form-input" placeholder="At least 6 characters">
                         <button type="button" class="toggle-password">
                             <i data-lucide="eye"></i>
                         </button>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - User Management</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/css/admin-panel-style.css">
 </head>
 <body>
     <header class="header">
@@ -25,9 +25,11 @@
                     <span class="user-email">a@a.com</span>
                 </div>
             </div>
-            <button class="logout-btn">
-                <i data-lucide="log-out"></i>
-            </button>
+            <a href="/logout">
+                <button class="logout-btn">
+                    <i data-lucide="log-out"></i>
+                </button>
+            </a>
         </div>
     </header>
 

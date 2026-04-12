@@ -60,21 +60,44 @@ class AuthService:
             return None
 
         return user
-
-    # -------------------------
-    # LOGIN (TOKEN CREATION)
-    # -------------------------
-    def login_user(self, username: str, password: str):
-        user = self.authenticate(username, password)
+    
+    def authenticate_user(self, username: str, password: str):
+        user = self.user_repo.get_by_username(username)
 
         if not user:
             return None
 
-        token = create_access_token(
+        if not verify_password(password, user.hashed_password):
+            return None
+
+        return user
+
+    # -------------------------
+    # LOGIN (TOKEN CREATION)
+    # -------------------------
+    # def login_user(self, username: str, password: str):
+    #     user = self.authenticate(username, password)
+
+    #     if not user:
+    #         return None
+
+    #     token = create_access_token(
+    #         data={
+    #             "sub": str(user.id),
+    #             "role": user.role
+    #         }
+    #     )
+
+    #     return token
+    def login_user(self, username: str, password: str):
+        user = self.authenticate_user(username, password)
+
+        if not user:
+            return None
+
+        return create_access_token(
             data={
                 "sub": str(user.id),
-                "role": user.role
+                "role": user.role.value
             }
         )
-
-        return token

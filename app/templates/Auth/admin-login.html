@@ -27,12 +27,12 @@
             <h1 class="title">ADMIN ACCESS</h1>
             <p class="subtitle">ADMINISTRATIVE CONTROL PANEL</p>
             
-            <form class="login-form">
+            <form class="login-form" action="/auth/admin/login" method="post">
                 <div class="form-group">
-                    <label for="email">ADMIN EMAIL</label>
+                    <label for="email">ADMIN USERNAME</label>
                     <div class="input-wrapper">
                         <i data-lucide="mail" class="input-icon left"></i>
-                        <input type="email" id="email" placeholder="admin@example.com">
+                        <input type="text" name="username" id="username" placeholder="admin username">
                         <i data-lucide="hexagon" class="input-icon right hexagon-icon"></i>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                     <label for="password">ADMIN PASSWORD</label>
                     <div class="input-wrapper">
                         <i data-lucide="lock" class="input-icon left"></i>
-                        <input type="password" id="password" placeholder="Enter admin password">
+                        <input type="password" name="password" id="password" placeholder="Enter admin password">
                         <i data-lucide="eye" class="input-icon right eye-icon"></i>
                     </div>
                 </div>

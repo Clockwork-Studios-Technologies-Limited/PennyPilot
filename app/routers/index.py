@@ -5,27 +5,43 @@ from app.dependencies.session import SessionDep
 from . import router
 
 
+# @router.get("/", response_class=RedirectResponse)
+# async def index_view(
+#     request: Request,
+#     user_logged_in: IsUserLoggedIn,
+#     db: SessionDep
+# ):
+#     if user_logged_in:
+#         user = await get_current_user(request, db)
+
+#         if await is_admin(user):
+#             return RedirectResponse(
+#                 url=request.url_for("admin_home_view"),
+#                 status_code=status.HTTP_303_SEE_OTHER
+#             )
+
+#         return RedirectResponse(
+#             url=request.url_for("dashboard_view"),
+#             status_code=status.HTTP_303_SEE_OTHER
+#         )
+
+#     return RedirectResponse(
+#         url=request.url_for("login_view"),
+#         status_code=status.HTTP_303_SEE_OTHER
+#     )
+
 @router.get("/", response_class=RedirectResponse)
 async def index_view(
-    request: Request,
     user_logged_in: IsUserLoggedIn,
+    request: Request,
     db: SessionDep
 ):
-    if user_logged_in:
-        user = await get_current_user(request, db)
+    if not user_logged_in:
+        return RedirectResponse("/login", 303)
 
-        if await is_admin(user):
-            return RedirectResponse(
-                url=request.url_for("admin_home_view"),
-                status_code=status.HTTP_303_SEE_OTHER
-            )
+    user = await get_current_user(request, db)
 
-        return RedirectResponse(
-            url=request.url_for("dashboard_view"),
-            status_code=status.HTTP_303_SEE_OTHER
-        )
+    if user.role == "admin":
+        return RedirectResponse("/admin/dashboard", 303)
 
-    return RedirectResponse(
-        url=request.url_for("login_view"),
-        status_code=status.HTTP_303_SEE_OTHER
-    )
+    return RedirectResponse("/dashboard", 303)

@@ -77,3 +77,8 @@ class UserRepository:
             logger.error(f"An error occurred while deleting user: {e}")
             self.db.rollback()
             raise
+        
+    def get_by_email(self, email: str) -> Optional[User]:
+        return self.db.exec(
+            select(User).where(User.email == email)
+        ).one_or_none()

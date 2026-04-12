@@ -8,8 +8,6 @@ from app.repositories.user import UserRepository
 from app.services.auth_service import AuthService
 from app.dependencies import SessionDep
 
-router = APIRouter()
-
 # @router.post("/login")
 # def login(
 #     response: Response,
@@ -168,7 +166,32 @@ def user_login(
 # -------------------------
 # ADMIN REGISTER
 # -------------------------
-@router.post("/admin/register")
+# @router.post("/admin/register")
+# def admin_register(
+#     request: Request,
+#     db: SessionDep,
+#     username: str = Form(...),
+#     email: str = Form(...),
+#     password: str = Form(...)
+# ):
+#     repo = UserRepository(db)
+#     auth = AuthService(repo)
+
+#     try:
+#         auth.register_user(
+#             username=username,
+#             email=email,
+#             password=password,
+#             role=UserRole.admin
+#         )
+
+#         flash(request, "Admin account created")
+#         return RedirectResponse("/admin/login-page", status_code=303)
+
+#     except Exception:
+#         flash(request, "Admin already exists", "danger")
+#         return RedirectResponse("/admin/register-page", status_code=303)
+@router.post("/auth/admin/register")
 def admin_register(
     request: Request,
     db: SessionDep,
@@ -180,44 +203,90 @@ def admin_register(
     auth = AuthService(repo)
 
     try:
-        auth.register_user(
-            username=username,
-            email=email,
-            password=password,
-            role=UserRole.admin
-        )
+        auth.register_user(username, email, password, role=UserRole.admin)
 
         flash(request, "Admin account created")
-        return RedirectResponse("/admin/login-page", status_code=303)
+        return RedirectResponse("/admin/login", status_code=303)
 
     except Exception:
         flash(request, "Admin already exists", "danger")
-        return RedirectResponse("/admin/register-page", status_code=303)
-
+        return RedirectResponse("/admin/register", status_code=303)
 
 # -------------------------
 # ADMIN LOGIN
 # -------------------------
-@router.post("/admin/login")
+# @router.post("/admin/login")
+# def admin_login(
+#     request: Request,
+#     db: SessionDep,
+#     email: str = Form(...),
+#     password: str = Form(...)
+# ):
+#     repo = UserRepository(db)
+#     auth = AuthService(repo)
+
+#     token = auth.login_user(email, password)
+
+#     # You can enforce admin check here OR in dependency
+#     # user = repo.get_by_email(email)
+
+#     # if user.role != UserRole.admin:
+#     #     raise HTTPException(
+#     #         status_code=status.HTTP_403_FORBIDDEN,
+#     #         detail="Not an admin"
+#     #     )
+
+#     response = RedirectResponse("/admin/dashboard", status_code=303)
+#     response.set_cookie(
+#         key="access_token",
+#         value=token,
+#         httponly=True
+#     )
+
+#     return response
+# @router.post("/auth/admin/login")
+# def admin_login(
+#     request: Request,
+#     db: SessionDep,
+#     username: str = Form(...),
+#     password: str = Form(...)
+# ):
+#     repo = UserRepository(db)
+#     auth = AuthService(repo)
+
+#     user = auth.authenticate_user(username, password)
+
+#     if not user or user.role != UserRole.admin:
+#         flash(request, "Invalid admin credentials", "danger")
+#         return RedirectResponse("/admin/login", status_code=303)
+
+#     token = auth.login_user(username, password)
+
+#     response = RedirectResponse("/admin/dashboard", status_code=303)
+#     response.set_cookie("access_token", token, httponly=True)
+
+#     return response
+@router.post("/auth/admin/login")
 def admin_login(
     request: Request,
     db: SessionDep,
-    email: str = Form(...),
+    username: str = Form(...),
     password: str = Form(...)
 ):
     repo = UserRepository(db)
     auth = AuthService(repo)
 
-    token = auth.login_user(email, password)
+    user = auth.authenticate_user(username, password)
 
-    # You can enforce admin check here OR in dependency
-    user = repo.get_by_email(email)
+    if not user:
+        flash(request, "Invalid credentials", "danger")
+        return RedirectResponse("/admin/login", status_code=303)
 
     if user.role != UserRole.admin:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not an admin"
-        )
+        flash(request, "Not an admin account", "danger")
+        return RedirectResponse("/admin/login", status_code=303)
+
+    token = auth.login_user(username, password)
 
     response = RedirectResponse("/admin/dashboard", status_code=303)
     response.set_cookie(
