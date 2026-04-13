@@ -42,6 +42,20 @@ async def subscriptions_view(
         context={"user": user}
     )
     
+@router.get("/budgets", response_class=HTMLResponse)
+async def budget_view(
+    request: Request,
+    user: AuthDep,
+    db: SessionDep
+):
+    return templates.TemplateResponse(
+        request=request,
+        name="App/budget.html",
+        context={
+            "user": user
+        }
+    )
+
 @router.get("/reports", response_class=HTMLResponse)
 async def reports_view(
     request: Request,

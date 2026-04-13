@@ -7,19 +7,7 @@ from fastapi import Request
 from fastapi.responses import HTMLResponse
 
 
-@router.get("/budget", response_class=HTMLResponse)
-async def budget_view(
-    request: Request,
-    user: AuthDep,
-    db: SessionDep
-):
-    return templates.TemplateResponse(
-        request=request,
-        name="App/budget.html",
-        context={
-            "user": user
-        }
-    )
+
 
 # @api_router.get("/budgets")
 # async def get_budgets(user: AuthDep, db: SessionDep):
