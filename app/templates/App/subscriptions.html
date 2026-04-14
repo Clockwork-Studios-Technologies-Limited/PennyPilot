@@ -282,7 +282,7 @@
                                 <div>
                                     <div class="expense-name">{{ s.service_name }}</div>
                                     <div class="stat-label">
-                                        {{ s.billing_cycle }} • Next: {{ s.next_billing_date }}
+                                        {{ s.billing_cycle.value | capitalize }} • Next: {{ s.next_billing_date }}
                                     </div>
                                 </div>
                             </div>
