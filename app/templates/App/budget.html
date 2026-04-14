@@ -15,15 +15,11 @@
             <div class="logo">
                 <div class="logo-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <!-- coin -->
                         <circle cx="12" cy="12" r="9"></circle>
-
-                        <!-- perfectly centered cent symbol -->
-                        <!-- C arc centered on x=12 -->
                         <path d="M13.5 8.5
                                 a4 4 0 1 0 0 7"></path>
 
-                        <!-- centered vertical line -->
+
                         <line x1="12" y1="7" x2="12" y2="17"></line>
 
                         <circle cx="12" cy="12" r="9"></circle>
@@ -74,15 +70,11 @@
         </nav>
 
     </header>
-
-    <!-- ============================================================
-         MAIN — only this block changes per page
-    ============================================================ -->
     <main>
 
-  <!-- LEFT COLUMN: Monthly Income + Quick Stats (dashboard style) -->
+  <!-- LEFT COLUMN: Monthly Income + Quick Stats  -->
   <aside class="left-col">
-    <!-- Income Card (identical to dashboard) -->
+    <!-- Income Card -->
             <form action="/income/set" method="post">
                 <input type="hidden" name="next" value="{{ request.url.path }}">
                 
