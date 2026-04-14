@@ -4,19 +4,6 @@ from fastapi import status
 from app.dependencies.session import SessionDep
 from app.dependencies.auth import AdminDep, IsUserLoggedIn, get_current_user, is_admin
 from . import router, templates
-
-
-# @router.get("/admin/dashboard", response_class=HTMLResponse)
-# async def admin_home_view(
-#     request: Request,
-#     user: AdminDep,
-#     db: SessionDep
-# ):
-#     return templates.TemplateResponse(
-#         request=request,
-#         name="Admin/admin-panel.html",
-#         context={"user": user}
-#     )
 from sqlmodel import select
 from math import ceil
 
@@ -84,18 +71,6 @@ async def admin_dashboard(
         "critical": len([u for u in users if u.tag == UserTag.critical]),
     }
 
-    # return templates.TemplateResponse(
-    #     "Admin/admin-panel.html",
-    #     {
-    #         "request": request,
-    #         "user": user,
-    #         "users": enriched_users,
-    #         "page": page,
-    #         "total_pages": total_pages,
-    #         "total_users": total_users,
-    #         "tag_counts": tag_counts
-    #     }
-    # )
     return templates.TemplateResponse(
         request=request,
         name="Admin/admin-panel.html",
@@ -133,22 +108,6 @@ async def update_user_tag(
 # -------------------------
 # DELETE USER
 # -------------------------
-# @router.post("/admin/user/delete")
-# async def delete_user(
-#     user_id: int = Form(...),
-#     db: SessionDep = SessionDep,
-#     admin: AdminDep = AdminDep
-# ):
-#     user = db.get(User, user_id)
-
-#     if user:
-#         db.delete(user)
-#         db.commit()
-
-#     return RedirectResponse("/admin/dashboard", status_code=303)
-
-from sqlmodel import select
-
 @router.post("/admin/user/delete")
 async def delete_user(db: SessionDep, admin: AdminDep, user_id: int = Form(...),):
 
@@ -156,7 +115,6 @@ async def delete_user(db: SessionDep, admin: AdminDep, user_id: int = Form(...),
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    # --- DELETE RELATED DATA FIRST ---
     # Income (one-to-one)
     if user.income:
         db.delete(user.income)
@@ -176,7 +134,6 @@ async def delete_user(db: SessionDep, admin: AdminDep, user_id: int = Form(...),
     for b in budgets:
         db.delete(b)
 
-    # --- NOW DELETE USER ---
     db.delete(user)
 
     db.commit()
