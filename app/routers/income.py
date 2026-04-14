@@ -27,5 +27,4 @@ async def add_income(
 
     db.commit()
 
-    # return RedirectResponse(url="/dashboard", status_code=303)
     return RedirectResponse(url=next, status_code=303)
