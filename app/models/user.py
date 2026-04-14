@@ -17,6 +17,7 @@ class UserTag(str, Enum):
     very_safe = "very_safe"
     risky = "risky"
     critical = "critical"
+    no_tag = "no_tag"
 
 
 # -------------------------
@@ -97,16 +98,6 @@ class Subscription(SQLModel, table=True):
 
     user_id: int = Field(foreign_key="user.id")
     user: Optional["User"] = Relationship(back_populates="subscriptions")
-    
-# class Budget(SQLModel, table=True):
-#     id: Optional[int] = Field(default=None, primary_key=True)
-
-#     category: Category
-#     monthly_limit: float
-
-#     user_id: int = Field(foreign_key="user.id")
-#     user: Optional["User"] = Relationship(back_populates="budgets")
-
 
 class Budget(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -116,4 +107,13 @@ class Budget(SQLModel, table=True):
 
     user_id: int = Field(foreign_key="user.id")
     user: Optional["User"] = Relationship(back_populates="budgets")
+    
+# class Budget(SQLModel, table=True):
+#     id: Optional[int] = Field(default=None, primary_key=True)
+
+#     category: Category
+#     monthly_limit: float
+
+#     user_id: int = Field(foreign_key="user.id")
+#     user: Optional["User"] = Relationship(back_populates="budgets")
 

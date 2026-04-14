@@ -23,7 +23,11 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: linear-gradient(135deg, #0d0f1a 0%, #1a1025 50%, #0d0f1a 100%);
+    background-color: var(--bg-primary);
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
     color: var(--text-primary);
     min-height: 100vh;
 }
@@ -279,12 +283,13 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
+    min-height: 71.5px;
 }
 
 .user-avatar {
     width: 32px;
     height: 32px;
-    background: var(--accent-purple);
+    background: var(--avatar-color, var(--accent-purple));
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -354,6 +359,118 @@ body {
     background: rgba(139, 146, 168, 0.15);
     color: var(--text-secondary);
     border: 1px solid rgba(139, 146, 168, 0.3);
+}
+
+/* Tag Selector */
+.tag-selector {
+    display: inline-block;
+}
+
+.risk-tag {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.risk-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tag-dropdown {
+    position: fixed;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    z-index: 10000;
+    min-width: 180px;
+    overflow: hidden;
+    display: none;
+}
+
+.tag-dropdown form {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.tag-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tag-option:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.tag-option i {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+.very-safe-option {
+    color: var(--accent-green);
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.very-safe-option:hover {
+    background: rgba(16, 185, 129, 0.25);
+}
+
+.stable-option {
+    color: var(--accent-blue);
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.stable-option:hover {
+    background: rgba(59, 130, 246, 0.25);
+}
+
+.risky-option {
+    color: var(--accent-yellow);
+    background: rgba(234, 179, 8, 0.15);
+    border: 1px solid rgba(234, 179, 8, 0.2);
+}
+
+.risky-option:hover {
+    background: rgba(234, 179, 8, 0.25);
+}
+
+.critical-option {
+    color: var(--accent-red);
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.critical-option:hover {
+    background: rgba(239, 68, 68, 0.25);
+}
+
+.no-tag-option {
+    color: var(--text-secondary);
+    background: rgba(139, 146, 168, 0.15);
+    border: 1px solid rgba(139, 146, 168, 0.2);
+}
+
+.no-tag-option:hover {
+    background: rgba(139, 146, 168, 0.25);
 }
 
 /* Delete Button */

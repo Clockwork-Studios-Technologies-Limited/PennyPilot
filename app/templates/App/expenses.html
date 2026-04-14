@@ -80,35 +80,84 @@
   <!-- LEFT COLUMN: Monthly Income + Quick Stats (dashboard style) -->
   <aside class="left-col">
     <!-- Income Card (identical to dashboard) -->
-    <div class="panel income-card">
-      <div class="income-header">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
-        <span style="font-weight: 600; letter-spacing: 0.5px;">MONTHLY INCOME</span>
-      </div>
-      <div class="income-sub">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width:14px; height:14px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
-        PRIMARY SOURCE
-      </div>
-      <div class="income-amount">$5,000</div>
-      <button class="btn-update" id="updateIncomeBtn">UPDATE INCOME</button>
-    </div>
+            <form action="/income/set" method="post">
+              <input type="hidden" name="next" value="{{ request.url.path }}">
+                <div class="panel income-card">
 
-    <!-- Quick Stats (exactly as dashboard: same spacing, font, and colors) -->
-    <div class="panel quick-stats">
-      <div class="panel-header">Quick Stats</div>
-      <div class="stat-row">
-        <span class="stat-label">Transactions</span>
-        <span class="stat-value">15</span>
-      </div>
-      <div class="stat-row">
-        <span class="stat-label">Active Subs</span>
-        <span class="stat-value num-purple">0</span>
-      </div>
-      <div class="stat-row">
-        <span class="stat-label">Budget Items</span>
-        <span class="stat-value num-yellow">10</span>
-      </div>
-    </div>
+                    <div class="income-header">
+                        <span>MONTHLY INCOME</span>
+                    </div>
+
+                    <div class="income-sub">PRIMARY SOURCE</div>
+
+                   <div class="income-amount">
+
+                    <span id="incomeDisplay">
+                        ${{ stats.income }}
+                    </span>
+
+                    <span id="incomeEditWrap" style="display:none;">
+                        $
+                        <input 
+                        style=" background: transparent; 
+                                width: 200px; 
+                                padding: 5px; 
+                                font-size: 1.2rem; 
+                                border: 1px solid var(--border-color); 
+                                border-radius: 4px;
+                                font-size: 2.5rem;
+                                font-weight: 700;
+                                color: var(--accent-green);
+                                text-shadow: 0 0 10px var(--accent-green-glow);
+                                margin-bottom: 0.5rem;
+                                "
+
+                            id="incomeInput"
+                            type="number"
+                            name="amount"
+                            step="0.01"
+                            value="{{ income }}"
+                            class="income-input"
+                        required>
+                    </span>
+
+                </div>
+
+                    <!-- BUTTONS -->
+                    <div id="viewBtns" class="income-btn-row">
+                        <button type="button" class="btn-update" onclick="enableEdit()">
+                            UPDATE INCOME
+                        </button>
+                    </div>
+
+                    <div id="editBtns" class="income-btn-row" style="display:none;">
+                        <button 
+                            style="background: #1d7f3e97; color: white; width:40%; margin-right: 5%; padding: 10px 20px;" 
+                            type="submit" class="btn-update">SAVE</button>
+                        <button 
+                            style="background: #7f1d1d97; color: white; width:40%; padding: 10px 20px;"
+                            type="button" class="btn-update" onclick="cancelEdit()">CANCEL</button>
+                    </div>
+
+                </div>
+            </form>
+
+            <!-- Quick Stats -->
+            <div class="panel quick-stats">
+                <div style="font-size: 1.1rem;" class="panel-header">Quick Stats</div>
+                <div class="stat-row">
+                    <span class="stat-label">Transactions</span>
+                    <span class="stat-value">{{ stats.transactions }}</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Active Subs</span>
+                    <span class="stat-value num-purple">{{ stats.active_subs }}</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Budget Items</span>
+                    <span class="stat-value num-yellow">{{ stats.budget_items }}</span>
+                </div>
+            </div>
   </aside>
 
   <!-- RIGHT CONTENT: original expenses page (unchanged) -->
@@ -122,125 +171,126 @@
 
     <div class="stats-grid">
       <div class="stat-card red">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+        </div>
         <div class="stat-label">Total Expenses</div>
-        <div class="stat-value">$952.54</div>
+        <div class="stat-value">{{ total_expenses }}</div>
       </div>
       <div class="stat-card blue">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+        </div>
         <div class="stat-label">Transactions</div>
-        <div class="stat-value">15</div>
+        <div class="stat-value">{{ transaction_count }}</div>
       </div>
       <div class="stat-card yellow">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+        </div>
         <div class="stat-label">Average Expense</div>
-        <div class="stat-value">$63.50</div>
+        <div class="stat-value">${{ avg_expense }}</div>
       </div>
     </div>
 
     <div class="content-grid">
       <div class="panel">
-        <div class="panel-header blue">Add New Expense</div>
-        <div class="form-grid">
-          <div class="field-group">
-            <label for="name">Expense Name</label>
-            <input type="text" id="name" placeholder="Expense Name">
+        <form action="/expenses/create" method="post">
+          <div>
+            <div class="panel-header blue">Add New Expense</div>
+
+            <div class="form-grid">
+              
+              <div class="field-group">
+                <label for="name">Expense Name</label>
+                <input type="text" id="name" name="name" placeholder="e.g. Groceries" required>
+              </div>
+
+              <div class="field-group">
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" name="amount" step="0.01" placeholder="0.00" required>
+              </div>
+
+              <div class="field-group">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                  {% for c in categories %}
+                    <option value="{{ c.value }}">{{ c.value }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" required>
+              </div>
+
+            </div>
+
+            <div style="margin-top: 1rem;" class="actions">
+              <button class="btn btn-save" type="submit">Save</button>
+              <button class="btn btn-cancel" type="reset">Cancel</button>
+            </div>
           </div>
-          <div class="field-group">
-            <label for="amount">Amount</label>
-            <input type="number" id="amount" placeholder="Amount">
-          </div>
-          <div class="field-group">
-            <label for="category">Category</label>
-            <select id="category">
-              <option>Food & Dining</option>
-              <option>Transport</option>
-              <option>Entertainment</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="field-group">
-            <label for="date">Date</label>
-            <input type="date" id="date">
-          </div>
-        </div>
-        <div class="actions">
-          <button class="btn btn-save">Save</button>
-          <button class="btn btn-cancel">Cancel</button>
-        </div>
+        </form>
       </div>
 
-      <div class="panel">
+      <!-- EXPENSE LIST -->
+      <div style="height:min-content;" class="panel">
         <div class="panel-header red">Recent Expenses</div>
+
         <div class="expense-list">
-          <div class="expense-row">
-            <div class="expense-meta">
-              <div class="expense-dot dot-food"></div>
-              <div>
-                <div class="expense-title">Groceries</div>
-                <div class="expense-subtext">Food & Dining • 2026-04-08</div>
+
+          {% if expenses|length == 0 %}
+            <div class="empty-state">
+              <div class="empty-icon">💰</div>
+              <p>No expenses yet. Add your first one above.</p>
+            </div>
+          {% endif %}
+
+          {% for e in expenses %}
+            <div class="expense-row">
+
+              <div class="expense-meta">
+                <div class="expense-dot dot-other"></div>
+
+                <div>
+                  <div class="expense-title">{{ e.name }}</div>
+                  <div class="expense-subtext">
+                    {{ e.category }} • {{ e.date }}
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="expense-controls">
-              <span class="expense-tag">Essential</span>
-              <span class="expense-amount">$125.00</span>
-            </div>
-          </div>
-          <div class="expense-row">
-            <div class="expense-meta">
-              <div class="expense-dot dot-transport"></div>
-              <div>
-                <div class="expense-title">Fuel</div>
-                <div class="expense-subtext">Transport • 2026-04-07</div>
+
+              <div class="expense-controls">
+                <span class="expense-amount" style="color: white;">${{ e.amount }}</span>
+
+                <form action="/expenses/delete/{{ e.id }}" method="post">
+                  <button class="btn-delete">Delete</button>
+                </form>
               </div>
+
             </div>
-            <div class="expense-controls">
-              <span class="expense-tag">Weekly</span>
-              <span class="expense-amount">$80.00</span>
-            </div>
-          </div>
-          <div class="expense-row">
-            <div class="expense-meta">
-              <div class="expense-dot dot-entertainment"></div>
-              <div>
-                <div class="expense-title">Movie Tickets</div>
-                <div class="expense-subtext">Entertainment • 2026-04-05</div>
-              </div>
-            </div>
-            <div class="expense-controls">
-              <span class="expense-tag">Leisure</span>
-              <span class="expense-amount">$42.50</span>
-            </div>
-          </div>
-          <div class="expense-row">
-            <div class="expense-meta">
-              <div class="expense-dot dot-other"></div>
-              <div>
-                <div class="expense-title">Phone Repair</div>
-                <div class="expense-subtext">Other • 2026-04-03</div>
-              </div>
-            </div>
-            <div class="expense-controls">
-              <span class="expense-tag">One-time</span>
-              <span class="expense-amount">$240.00</span>
-            </div>
-          </div>
-          <div class="expense-row">
-            <div class="expense-meta">
-              <div class="expense-dot dot-food"></div>
-              <div>
-                <div class="expense-title">Lunch</div>
-                <div class="expense-subtext">Food & Dining • 2026-04-02</div>
-              </div>
-            </div>
-            <div class="expense-controls">
-              <span class="expense-tag">Daily</span>
-              <span class="expense-amount">$18.75</span>
-            </div>
-          </div>
+          {% endfor %}
+
         </div>
-        <div class="pagination">
-          <span class="page-info">Page 1 of 3</span>
-          <div class="page-buttons">
-            <button class="btn btn-page">Prev</button>
-            <button class="btn btn-page">Next</button>
+
+        <!-- PAGINATION -->
+    <div style="margin-top: 1rem;" class="pagination">
+          <span class="page-info">Page {{ page }} of {{ total_pages }}</span>
+
+          <div class="pagination-right">
+            <a href="?page={{ page-1 if page > 1 else 1 }}">
+              <button class="next-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+            </a>
+
+            <a href="?page={{ page+1 if page < total_pages else total_pages }}">
+              <button class="next-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+            </a>
           </div>
         </div>
       </div>
@@ -248,6 +298,7 @@
   </div>
 </div>
 
+<!-- this function is probably junk -->
 <script>
   document.getElementById('updateIncomeBtn')?.addEventListener('click', () => {
     alert("Income update feature (demo) – would open a modal to change $5,000.");
@@ -263,3 +314,22 @@
 </script>
 </body>
 </html>
+<script>
+function enableEdit() {
+    document.getElementById("incomeDisplay").style.display = "none";
+    document.getElementById("incomeEditWrap").style.display = "flex";
+
+    document.getElementById("viewBtns").style.display = "none";
+    document.getElementById("editBtns").style.display = "flex";
+
+    document.getElementById("incomeInput").focus();
+}
+
+function cancelEdit() {
+    document.getElementById("incomeDisplay").style.display = "block";
+    document.getElementById("incomeEditWrap").style.display = "none";
+
+    document.getElementById("viewBtns").style.display = "flex";
+    document.getElementById("editBtns").style.display = "none";
+}
+</script>
