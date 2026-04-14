@@ -24,8 +24,8 @@ class UserTag(str, Enum):
 # BASE (shared fields)
 # -------------------------
 class UserBase(SQLModel):
-    username: str
-    email: EmailStr
+    username: str = Field(index=True, unique=True)
+    email: EmailStr = Field(index=True, unique=True)
 
 
 # -------------------------
@@ -58,7 +58,6 @@ class Category(str, Enum):
     utilities = "Bills & Utilities"
     shopping = "Shopping"
     rent = "Rent"
-    shopping_items = "Shopping"
     health = "Health"
     savings = "Savings"
     other = "Other"
