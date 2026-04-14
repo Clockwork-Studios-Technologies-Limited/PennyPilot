@@ -11,9 +11,9 @@
     --text-primary: #ffffff;
     --text-secondary: #8b92a8;
     --text-muted: #5a6075;
-    --accent-orange: #ff6b35;
-    --accent-red: #ff4757;
-    --accent-gradient: linear-gradient(135deg, #ff4757 0%, #ff6b35 100%);
+    --accent-blue: #1e3a8a;
+    --accent-blue-dark: #0f172a;
+    --accent-gradient: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
     --input-bg: #1a1d29;
 }
 
@@ -44,7 +44,7 @@ body::before {
     z-index: 0;
 }
 
-/* Gradient overlay with orange/red/purple accents */
+/* Gradient overlay with navy blue/purple accents */
 body::after {
     content: '';
     position: absolute;
@@ -52,8 +52,8 @@ body::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(ellipse at 20% 50%, rgba(255, 107, 53, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 50%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+    background: radial-gradient(ellipse at 20% 50%, rgba(30, 58, 138, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(15, 23, 42, 0.1) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
 }
@@ -74,7 +74,7 @@ body::after {
     border-radius: 16px;
     padding: 40px 48px;
     width: 100%;
-    max-width: 420px;
+    width: 420px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
@@ -92,7 +92,7 @@ body::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 32px rgba(255, 107, 53, 0.4);
+    box-shadow: 0 8px 32px rgba(15, 23, 42, 0.6);
 }
 
 .logo-icon i {
@@ -163,7 +163,7 @@ body::after {
 }
 
 .input-action:hover {
-    color: var(--accent-orange);
+    color: var(--accent-blue);
 }
 
 .input-wrapper input {
@@ -183,7 +183,7 @@ body::after {
 }
 
 .input-wrapper input:focus {
-    border-color: var(--accent-orange);
+    border-color: var(--accent-blue);
     background: #1f2332;
 }
 
@@ -203,12 +203,12 @@ body::after {
     gap: 8px;
     margin-top: 8px;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.5);
 }
 
 .signin-btn:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 24px rgba(255, 107, 53, 0.4);
+    box-shadow: 0 6px 24px rgba(15, 23, 42, 0.6);
 }
 
 .signin-btn i {
@@ -244,7 +244,7 @@ body::after {
 }
 
 .signup-link {
-    color: var(--accent-orange);
+    color: var(--accent-blue);
     text-decoration: none;
     font-weight: 500;
 }
@@ -262,11 +262,15 @@ body::after {
     padding-top: 20px;
     border-top: 1px solid var(--border-color);
     transition: color 0.2s;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
 }
 
 .admin-access:hover {
-    color: var(--accent-orange);
+    color: #ef4444;;
 }
+
 
 .secure-portal {
     color: var(--text-muted);

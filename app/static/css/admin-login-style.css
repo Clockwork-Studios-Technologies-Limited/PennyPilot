@@ -55,20 +55,24 @@ body {
 
 .back-link {
     position: absolute;
-    top: 24px;
-    left: 24px;
+    top: 20px;
+    left: 20px;
     display: flex;
     align-items: center;
     gap: 8px;
     color: var(--text-secondary);
     text-decoration: none;
     font-size: 14px;
-    font-weight: 500;
-    transition: color 0.2s;
+    padding: 8px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: rgba(30, 35, 50, 0.5);
+    transition: all 0.2s ease;
     z-index: 10;
 }
 
 .back-link:hover {
+    background: rgba(30, 35, 50, 0.8);
     color: var(--text-primary);
 }
 

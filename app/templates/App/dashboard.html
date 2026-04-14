@@ -6,6 +6,7 @@
     <title>PennyPilot - Dashboard</title>
     <link rel="stylesheet" href="/static/css/dashboard-style.css">
     <link rel="icon" href="/static/img/penny.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -81,33 +82,82 @@
         <!-- Left Column -->
         <aside class="left-col">
             <!-- Income Card -->
-            <div class="panel income-card">
-                <div class="income-header">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
-                    <span style="font-weight: 600; letter-spacing: 0.5px;">MONTHLY INCOME</span>
+            <form action="/income/set" method="post">
+                <input type="hidden" name="next" value="{{ request.url.path }}">
+                <div class="panel income-card">
+
+                    <div class="income-header">
+                        <span>MONTHLY INCOME</span>
+                    </div>
+
+                    <div class="income-sub">PRIMARY SOURCE</div>
+
+                   <div class="income-amount">
+
+                    <span id="incomeDisplay">
+                        ${{ income }}
+                    </span>
+
+                    <span id="incomeEditWrap" style="display:none;">
+                        $
+                        <input 
+                        style=" background: transparent; 
+                                width: 200px; 
+                                padding: 5px; 
+                                font-size: 1.2rem; 
+                                border: 1px solid var(--border-color); 
+                                border-radius: 4px;
+                                font-size: 2.5rem;
+                                font-weight: 700;
+                                color: var(--accent-green);
+                                text-shadow: 0 0 10px var(--accent-green-glow);
+                                margin-bottom: 0.5rem;
+                                "
+
+                            id="incomeInput"
+                            type="number"
+                            name="amount"
+                            step="0.01"
+                            value="{{ income }}"
+                            class="income-input"
+                        required>
+                    </span>
+
                 </div>
-                <div class="income-sub">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width:14px; height:14px;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
-                    PRIMARY SOURCE
+
+                    <!-- BUTTONS -->
+                    <div id="viewBtns" class="income-btn-row">
+                        <button type="button" class="btn-update" onclick="enableEdit()">
+                            UPDATE INCOME
+                        </button>
+                    </div>
+
+                    <div  id="editBtns" class="income-btn-row" style="display:none;">
+                        <button 
+                            style="background: #1d7f3e97; color: white; width:40%; margin-right: 5%; padding: 10px 20px;" 
+                            type="submit" class="btn-update">SAVE</button>
+                        <button 
+                            style="background: #7f1d1d97; color: white; width:40%; padding: 10px 20px;"
+                            type="button" class="btn-update" onclick="cancelEdit()">CANCEL</button>
+                    </div>
+
                 </div>
-                <div class="income-amount">$5,000</div>
-                <button class="btn-update">UPDATE INCOME</button>
-            </div>
+            </form>
 
             <!-- Quick Stats -->
             <div class="panel quick-stats">
                 <div class="panel-header">Quick Stats</div>
                 <div class="stat-row">
                     <span class="stat-label">Transactions</span>
-                    <span class="stat-value">0</span>
+                    <span class="stat-value">{{ transactions }}</span>
                 </div>
                 <div class="stat-row">
                     <span class="stat-label">Active Subs</span>
-                    <span class="stat-value num-purple">0</span>
+                    <span class="stat-value num-purple">{{ subs_count }}</span>
                 </div>
                 <div class="stat-row">
                     <span class="stat-label">Budget Items</span>
-                    <span class="stat-value num-yellow">3</span>
+                    <span class="stat-value num-yellow">{{ budget_count }}</span>
                 </div>
             </div>
         </aside>
@@ -115,7 +165,7 @@
         <!-- Center Column -->
         <section class="center-col">
             <div class="overview-section">
-                <h2 class="overview-title">DASHBOARD OVERVIEW</h2>
+                <h2 class="overview-title">Dashboard Overview</h2>
                 <p class="overview-subtitle">Financial health monitoring system</p>
             </div>
 
@@ -126,28 +176,28 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
                     </div>
                     <div class="summary-label">Monthly Income</div>
-                    <div class="summary-value">$5,000</div>
+                    <div class="summary-value">${{ income }}</div>
                 </div>
                 <div class="summary-card red">
                     <div class="summary-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                     </div>
                     <div class="summary-label">Total Expenses</div>
-                    <div class="summary-value">$0</div>
+                    <div class="summary-value">${{ total_spent }}</div>
                 </div>
                 <div class="summary-card purple">
                     <div class="summary-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
                     </div>
                     <div class="summary-label">Subscriptions</div>
-                    <div class="summary-value">$0</div>
+                    <div class="summary-value">${{ subs_total }}</div>
                 </div>
                 <div class="summary-card yellow">
                     <div class="summary-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
                     </div>
                     <div class="summary-label">Remaining</div>
-                    <div class="summary-value">$5,000</div>
+                    <div class="summary-value">${{ remaining }}</div>
                 </div>
             </div>
 
@@ -155,20 +205,20 @@
             <div class="burn-rate-panel">
                 <div class="burn-header">
                     <div class="panel-header" style="margin-bottom:0; font-size: 1rem;">Burn Rate Analysis</div>
-                    <div class="burn-rate-percent">0.0%</div>
+                    <div class="burn-rate-percent">{{ burn_rate }}%</div>
                 </div>
                 <div class="burn-rate-label">Monthly Burn Rate</div>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill"></div>
+                    <div class="progress-bar-fill" style="width: {{ burn_rate }}%"></div>
                 </div>
                 <div class="burn-details">
                     <div class="burn-detail-box">
                         <div class="burn-detail-label">Total Burn</div>
-                        <div class="burn-detail-value red">$0</div>
+                        <div class="burn-detail-value red">${{ total_spent }}</div>
                     </div>
                     <div class="burn-detail-box">
                         <div class="burn-detail-label">Daily Avg</div>
-                        <div class="burn-detail-value blue">$0.00</div>
+                        <div class="burn-detail-value blue">${{ daily_avg }}</div>
                     </div>
                 </div>
             </div>
@@ -184,7 +234,7 @@
                         <div class="dot red"></div>
                         <span class="expense-name">One-time Expenses</span>
                     </div>
-                    <span class="expense-amount">$0</span>
+                    <span class="expense-amount">${{ one_time }}</span>
                 </div>
 
                 <div class="expense-item">
@@ -192,17 +242,23 @@
                         <div class="dot purple"></div>
                         <span class="expense-name">Recurring Subs</span>
                     </div>
-                    <span class="expense-amount">$0</span>
+                    <span class="expense-amount">${{ subs_total }}</span>
                 </div>
 
                 <div class="expense-total">
                     <span class="total-label">Total</span>
-                    <span class="total-amount">$0</span>
+                    <span class="total-amount">${{ total_spent }}</span>
                 </div>
                 
-                <!-- Placeholder for visual balance matching the image -->
-                <div style="margin-top: 1rem; height: 100px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid var(--border-color); display: grid; place-items: center; color: var(--text-muted); font-size: 0.8rem;">
-                    <span>Chart Placeholder</span>
+                <!-- Pie Chart for Expenses vs Income -->
+                <div style="margin-top: 1rem;">
+                    <div id="chartContainer" style="height: 200px; position: relative; display: none;">
+                        <canvas id="expenseIncomePieChart" style="max-height: 200px;"></canvas>
+                    </div>
+                    <div id="emptyChartState" class="empty-state" style="display: none; margin-top: 1rem;">
+                        <div class="empty-icon">📊</div>
+                        <p>Set your monthly income to see expense breakdown.</p>
+                    </div>
                 </div>
             </div>
         </aside>
@@ -215,3 +271,98 @@
 
 </body>
 </html>
+<script>
+function enableEdit() {
+    document.getElementById("incomeDisplay").style.display = "none";
+    document.getElementById("incomeEditWrap").style.display = "flex";
+
+    document.getElementById("viewBtns").style.display = "none";
+    document.getElementById("editBtns").style.display = "flex";
+
+    document.getElementById("incomeInput").focus();
+}
+
+function cancelEdit() {
+    document.getElementById("incomeDisplay").style.display = "block";
+    document.getElementById("incomeEditWrap").style.display = "none";
+
+    document.getElementById("viewBtns").style.display = "flex";
+    document.getElementById("editBtns").style.display = "none";
+}
+
+// Initialize Expense vs Income Pie Chart
+window.addEventListener('load', function() {
+    const income = parseFloat('{{ income }}');
+    const totalSpent = parseFloat('{{ total_spent }}');
+    const chartContainer = document.getElementById('chartContainer');
+    const emptyChartState = document.getElementById('emptyChartState');
+    
+    if (income === 0 || isNaN(income)) {
+        // Show empty state
+        emptyChartState.style.display = 'block';
+        chartContainer.style.display = 'none';
+    } else {
+        // Show chart
+        chartContainer.style.display = 'block';
+        emptyChartState.style.display = 'none';
+        
+        const ctx = document.getElementById('expenseIncomePieChart');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Total Expenses', 'Remaining'],
+                    datasets: [{
+                        data: [totalSpent, income - totalSpent],
+                        backgroundColor: [
+                            '#ef4444',
+                            '#10b981'
+                        ],
+                        borderColor: [
+                            '#dc2626',
+                            '#059669'
+                        ],
+                        borderWidth: 2,
+                        hoverOffset: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#8b92a8',
+                                font: {
+                                    size: 12,
+                                    weight: '500'
+                                },
+                                padding: 15,
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.parsed || 0;
+                                    const percent = ((value / income) * 100).toFixed(1);
+                                    return `$${value.toFixed(2)} (${percent}%)`;
+                                }
+                            },
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 10,
+                            borderRadius: 8,
+                            titleColor: '#fff',
+                            bodyColor: '#8b92a8',
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    }
+});
+</script>

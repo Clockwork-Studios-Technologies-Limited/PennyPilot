@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Command Center - Create Account</title>
+    <title>PennyPilot - Create Account</title>
     <link rel="stylesheet" href="/static/css/user-login-style.css">
+    <link rel="icon" href="/static/img/penny.png" type="image/x-icon">
 </head>
 <body>
     <div class="signup-container">
@@ -23,7 +24,7 @@
                     <label for="fullname">FULL NAME</label>
                     <div class="input-wrapper">
                         <i data-lucide="user" class="input-icon"></i>
-                        <input type="text" name="username" id="fullname" placeholder="John Doe">
+                        <input type="text" name="username" id="fullname" placeholder="John Doe" required>
                     </div>
                 </div>
                 
@@ -31,7 +32,7 @@
                     <label for="email">EMAIL ADDRESS</label>
                     <div class="input-wrapper">
                         <i data-lucide="mail" class="input-icon"></i>
-                        <input type="email" name="email" id="email" placeholder="user@example.com">
+                        <input type="email" name="email" id="email" placeholder="user@example.com" required>
                         <i data-lucide="hexagon" class="input-action"></i>
                     </div>
                 </div>
@@ -49,7 +50,7 @@
                     <label for="confirm-password">CONFIRM PASSWORD</label>
                     <div class="input-wrapper">
                         <i data-lucide="lock" class="input-icon"></i>
-                        <input type="password" id="confirm-password" placeholder="Confirm your password">
+                        <input type="password" name="confirm_password" id="confirm-password" placeholder="Confirm your password" required>
                         <i data-lucide="eye" class="input-action toggle-password"></i>
                     </div>
                 </div>

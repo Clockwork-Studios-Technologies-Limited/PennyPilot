@@ -117,6 +117,12 @@
             border-bottom: 2px solid var(--accent-blue);
         }
 
+        nav a svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2;
+        }
+
         /* --- Main Layout --- */
         main {
             flex: 1;
@@ -506,7 +512,7 @@
             }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
             header {
                 flex-direction: column;
                 gap: 1rem;
@@ -564,4 +570,49 @@
             border-radius: 12px;
 
             border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        .income-input {
+            background: transparent;
+            border: none;
+            outline: none;
+
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            color: inherit;
+        }
+
+        .income-input::-webkit-outer-spin-button,
+        .income-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .income-input:focus {
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .income-input::placeholder {
+            opacity: 0.4;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .empty-icon {
+            font-size: 2.2rem;
+            margin-bottom: 0.6rem;
+            opacity: 0.5;
+        }
+
+        .empty-state p {
+            font-size: 0.875rem;
         }

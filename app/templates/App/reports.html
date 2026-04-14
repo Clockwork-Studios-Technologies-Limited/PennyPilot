@@ -78,47 +78,89 @@
     <!-- Main Content -->
     <main>
 
-    <!-- LEFT COLUMN -->
-    <div class="left-col">
+<!-- LEFT COLUMN: Monthly Income + Quick Stats (dashboard style) -->
+  <aside class="left-col">
+    <!-- Income Card (identical to dashboard) -->
+            <form action="/income/set" method="post">
+                <input type="hidden" name="next" value="{{ request.url.path }}">
+                <div class="panel income-card">
 
-        <!-- Income -->
-        <div class="panel income-card">
-            <div class="income-header">
-                <i class="fa-solid fa-dollar-sign"></i>
-                <span>Monthly Income</span>
+                    <div class="income-header">
+                        <span>MONTHLY INCOME</span>
+                    </div>
+
+                    <div class="income-sub">PRIMARY SOURCE</div>
+
+                   <div class="income-amount">
+
+                    <span id="incomeDisplay">
+                        ${{ stats.income }}
+                    </span>
+
+                    <span id="incomeEditWrap" style="display:none;">
+                        $
+                        <input 
+                        style=" background: transparent; 
+                                width: 200px; 
+                                padding: 5px; 
+                                font-size: 1.2rem; 
+                                border: 1px solid var(--border-color); 
+                                border-radius: 4px;
+                                font-size: 2.5rem;
+                                font-weight: 700;
+                                color: var(--accent-green);
+                                text-shadow: 0 0 10px var(--accent-green-glow);
+                                margin-bottom: 0.5rem;
+                                "
+
+                            id="incomeInput"
+                            type="number"
+                            name="amount"
+                            step="0.01"
+                            value="{{ income }}"
+                            class="income-input"
+                        required>
+                    </span>
+                    
+
+                </div>
+
+                    <!-- BUTTONS -->
+                    <div id="viewBtns" class="income-btn-row">
+                        <button type="button" class="btn-update" onclick="enableEdit()">
+                            UPDATE INCOME
+                        </button>
+                    </div>
+
+                    <div  id="editBtns" class="income-btn-row" style="display:none;">
+                        <button 
+                            style="background: #1d7f3e97; color: white; width:40%; margin-right: 5%; padding: 10px 20px;" 
+                            type="submit" class="btn-update">SAVE</button>
+                        <button 
+                            style="background: #7f1d1d97; color: white; width:40%; padding: 10px 20px;"
+                            type="button" class="btn-update" onclick="cancelEdit()">CANCEL</button>
+                    </div>
+
+                </div>
+            </form>
+
+            <!-- Quick Stats -->
+            <div class="panel quick-stats">
+                <div class="panel-header">Quick Stats</div>
+                <div class="stat-row">
+                    <span class="stat-label">Transactions</span>
+                    <span class="stat-value">{{ stats.transactions }}</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Active Subs</span>
+                    <span class="stat-value num-purple">{{ stats.active_subs }}</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Budget Items</span>
+                    <span class="stat-value num-yellow">{{ stats.budget_items }}</span>
+                </div>
             </div>
-
-            <div class="income-amount">$5,000</div>
-
-            <div class="income-sub">
-                <i class="fa-solid fa-arrow-trend-up"></i>
-                Primary Source
-            </div>
-
-            <button class="btn-update">UPDATE INCOME</button>
-        </div>
-
-        <!-- Quick Stats -->
-        <div class="panel quick-stats">
-            <div class="panel-header blue">Quick Stats</div>
-
-            <div class="stat-row">
-                <span class="stat-label">Transactions</span>
-                <span class="stat-value num-blue">15</span>
-            </div>
-
-            <div class="stat-row">
-                <span class="stat-label">Active Subs</span>
-                <span class="stat-value num-purple">0</span>
-            </div>
-
-            <div class="stat-row">
-                <span class="stat-label">Budget Items</span>
-                <span class="stat-value num-yellow">10</span>
-            </div>
-        </div>
-
-    </div>
+  </aside>
 
 
     <!-- CENTER COLUMN -->
@@ -126,99 +168,144 @@
 
         <!-- Page Header -->
         <div class="overview-section">
-            <div class="overview-title">Reports & Analytics</div>
+            <div class="overview-title">Reports and Analytics</div>
             <div class="overview-subtitle">Detailed insights into spending patterns</div>
         </div>
 
         <!-- Top Summary Cards -->
         <div class="summary-grid">
 
-            <div class="summary-card blue">
-                <div class="summary-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="summary-card green">
+                <div class="summary-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                </div>
                 <div class="summary-label">Savings Rate</div>
-                <div class="summary-value">80.9%</div>
+                <div class="summary-value">{{ savings_rate }}%</div>
             </div>
 
             <div class="summary-card purple">
-                <div class="summary-icon"><i class="fa-solid fa-wallet"></i></div>
+                <div class="summary-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                </div>
                 <div class="summary-label">Total Spending</div>
-                <div class="summary-value">$952.54</div>
+                <div class="summary-value">${{ total_spending }}</div>
             </div>
 
             <div class="summary-card yellow">
-                <div class="summary-icon"><i class="fa-regular fa-clock"></i></div>
+                <div class="summary-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                </div>
                 <div class="summary-label">Daily Average</div>
-                <div class="summary-value">$31.75</div>
+                <div class="summary-value">${{ daily_average }}</div>
             </div>
 
             <div class="summary-card red">
-                <div class="summary-icon"><i class="fa-solid fa-bell"></i></div>
+                <div class="summary-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                </div>
                 <div class="summary-label">Largest Expense</div>
-                <div class="summary-value">$234.99</div>
+                <div class="summary-value">${{ largest_expense }}</div>
             </div>
 
         </div>
 
+        <!-- pagination with page limit of 5, also, include empty state, would also like progress bars where the largest expense is the used as the denominator to find the percentage -->
         <!-- Spending by Category -->
-        <div class="panel">
+        <div class="panel extra-padding">
             <div class="panel-header purple">Spending by Category</div>
 
-            <div class="stat-row">
-                <span>Food & Dining</span>
-                <span>$273.12 (28.7%)</span>
-            </div>
+            {% if spending_by_category %}
+                {% for item in spending_by_category %}
+                <div class="stat-row">
+                    <div style="width: 100%;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span>{{ item.category }}</span>
+                            <span>${{ item.amount }} ({{ item.percent }}%)</span>
+                        </div>
+                        <div style="width: 100%; background-color: rgba(200, 200, 200, 0.2); border-radius: 4px; height: 8px; overflow: hidden;">
+                            <div style="width: {{ item.percent }}%; background: linear-gradient(90deg, {{ item.gradient_start }}, {{ item.gradient_end }}); height: 100%; border-radius: 4px; transition: width 0.3s ease;"></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <!-- Pagination for Spending -->
+                {% if spending_total_pages > 1 %}
+                <div class="pagination">
+                    <span class="page-info">Page {{ spending_page }} of {{ spending_total_pages }}</span>
 
-            <div class="stat-row">
-                <span>Shopping</span>
-                <span>$234.99 (24.7%)</span>
-            </div>
+                    <div class="pagination-right">
+                        <a href="/reports?spending_page={{ spending_page-1 if spending_page > 1 else 1 }}&budget_page={{ budget_page }}">
+                            <button class="next-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            </button>
+                        </a>
 
-            <div class="stat-row">
-                <span>Entertainment</span>
-                <span>$136.49 (14.3%)</span>
-            </div>
-
-            <div class="stat-row">
-                <span>Bills & Utilities</span>
-                <span>$125.00 (13.1%)</span>
-            </div>
-
-            <div class="stat-row">
-                <span>Transportation</span>
-                <span>$79.50 (8.3%)</span>
-            </div>
+                        <a href="/reports?spending_page={{ spending_page+1 if spending_page < spending_total_pages else spending_total_pages }}&budget_page={{ budget_page }}">
+                            <button class="next-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">📊</div>
+                    <p>No spending data yet</p>
+                </div>
+            {% endif %}
         </div>
 
+        <!-- pagination with page limit of 5, also, include empty state, would also like progress bars where the budget category is the used as the denominator to find the percentage -->
         <!-- Budget vs Actual -->
-        <div class="panel">
+        <div class="panel extra-padding">
             <div class="panel-header green">Budget vs Actual</div>
 
-            <div class="stat-row">
-                <span>Food & Dining</span>
-                <span>$291.62 / $500</span>
-            </div>
+            {% if budget_vs_actual %}
+                {% for item in budget_vs_actual %}
+                <div class="stat-row">
+                    <div style="width: 100%;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span>{{ item.category }}</span>
+                            <span>${{ item.spent }} / ${{ item.budget }}</span>
+                        </div>
+                        <div style="width: 100%; background-color: rgba(200, 200, 200, 0.2); border-radius: 4px; height: 8px; overflow: hidden;">
+                            <div style="width: {{ item.percent }}%; background: linear-gradient(90deg, {{ item.gradient_start }}, {{ item.gradient_end }}); height: 100%; border-radius: 4px; transition: width 0.3s ease;"></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <!-- Pagination for Budget -->
+                {% if budget_total_pages > 1 %}
+                <div class="pagination">
+                    <span class="page-info">Page {{ budget_page }} of {{ budget_total_pages }}</span>
 
-            <div class="stat-row">
-                <span>Transportation</span>
-                <span>$79.50 / $200</span>
-            </div>
+                    <div class="pagination-right">
+                        <a href="/reports?spending_page={{ spending_page }}&budget_page={{ budget_page-1 if budget_page > 1 else 1 }}">
+                            <button class="next-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                            </button>
+                        </a>
 
-            <div class="stat-row">
-                <span>Entertainment</span>
-                <span>$131.74 / $150</span>
-            </div>
-
-            <div class="stat-row">
-                <span>Bills & Utilities</span>
-                <span>$125.00 / $300</span>
-            </div>
-
-            <div class="stat-row">
-                <span>Shopping</span>
-                <span>$234.99 / $250</span>
-            </div>
+                        <a href="/reports?spending_page={{ spending_page }}&budget_page={{ budget_page+1 if budget_page < budget_total_pages else budget_total_pages }}">
+                            <button class="next-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">📋</div>
+                    <p>No budgets set yet</p>
+                </div>
+            {% endif %}
         </div>
 
+        <!-- bar chart of monthly spending, you could also go nuts here, and maybe a pie chart or maybe even a calender  with arrows to go by monthor something since every expense and subscription does have a date -->
         <!-- Chart -->
         <div class="panel">
             <div class="panel-header blue">Monthly Spending Trend</div>
@@ -232,17 +319,17 @@
     <div class="right-col">
 
         <!-- Subscriptions -->
-        <div class="panel">
+        <div class="panel extra-padding">
             <div class="panel-header purple">Subscriptions</div>
 
             <div class="stat-row">
                 <span>Active</span>
-                <span class="stat-value num-purple">0</span>
+                <span class="stat-value num-purple">{{ active_subs }}</span>
             </div>
 
             <div class="stat-row">
                 <span>Monthly Cost</span>
-                <span class="stat-value num-purple">$0</span>
+                <span class="stat-value num-purple">${{ sub_cost }}</span>
             </div>
         </div>
 
@@ -252,22 +339,22 @@
 
             <div class="stat-row">
                 <span>Total Income</span>
-                <span class="stat-value num-green">$5,000</span>
+                <span class="stat-value num-green">${{ income }}</span>
             </div>
 
             <div class="stat-row">
                 <span>Expenses</span>
-                <span class="stat-value num-red">$952.54</span>
+                <span class="stat-value num-red">${{ total_expenses }}</span>
             </div>
 
             <div class="stat-row">
                 <span>Subscriptions</span>
-                <span class="stat-value num-purple">$0</span>
+                <span class="stat-value num-purple">${{ sub_cost }}</span>
             </div>
 
             <div class="stat-row">
                 <span>Net Savings</span>
-                <span class="stat-value num-green">$4,047.46</span>
+                <span class="stat-value num-green">${{ net_savings }}</span>
             </div>
         </div>
 
@@ -282,3 +369,80 @@
 
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+<script>
+
+function enableEdit() {
+    document.getElementById("incomeDisplay").style.display = "none";
+    document.getElementById("incomeEditWrap").style.display = "flex";
+
+    document.getElementById("viewBtns").style.display = "none";
+    document.getElementById("editBtns").style.display = "flex";
+
+    document.getElementById("incomeInput").focus();
+}
+
+function cancelEdit() {
+    document.getElementById("incomeDisplay").style.display = "block";
+    document.getElementById("incomeEditWrap").style.display = "none";
+
+    document.getElementById("viewBtns").style.display = "flex";
+    document.getElementById("editBtns").style.display = "none";
+}
+
+// Initialize monthly spending chart
+document.addEventListener('DOMContentLoaded', function() {
+    const labels = {{ monthly_labels | tojson }};
+    const values = {{ monthly_values | tojson }};
+    
+    const ctx = document.getElementById('spendingChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Monthly Spending',
+                data: values,
+                backgroundColor: 'rgba(100, 200, 255, 0.5)',
+                borderColor: 'rgba(100, 200, 255, 1)',
+                borderWidth: 2,
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        color: '#999'
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(200, 200, 200, 0.1)'
+                    },
+                    ticks: {
+                        color: '#999',
+                        callback: function(value) {
+                            return '$' + value;
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: '#999'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>

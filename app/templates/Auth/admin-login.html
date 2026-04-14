@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Access</title>
+    <title>Admin Login</title>
     <link rel="stylesheet" href="/static/css/admin-login-style.css">
+    <link rel="icon" href="/static/img/penny.png" type="image/x-icon">
 </head>
 <body>
     
@@ -32,7 +33,7 @@
                     <label for="email">ADMIN USERNAME</label>
                     <div class="input-wrapper">
                         <i data-lucide="mail" class="input-icon left"></i>
-                        <input type="text" name="username" id="username" placeholder="admin username">
+                        <input type="text" name="username" id="username" placeholder="admin username" required>
                         <i data-lucide="hexagon" class="input-icon right hexagon-icon"></i>
                     </div>
                 </div>
@@ -41,8 +42,8 @@
                     <label for="password">ADMIN PASSWORD</label>
                     <div class="input-wrapper">
                         <i data-lucide="lock" class="input-icon left"></i>
-                        <input type="password" name="password" id="password" placeholder="Enter admin password">
-                        <i data-lucide="eye" class="input-icon right eye-icon"></i>
+                        <input type="password" name="password" id="password" placeholder="Enter admin password" required>
+                        <i data-lucide="eye" class="input-icon right eye-icon toggle-password"></i>
                     </div>
                 </div>
                 
@@ -67,6 +68,17 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         lucide.createIcons();
+
+        // Toggle password visibility
+        document.querySelectorAll('.toggle-password').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const input = this.closest('.input-wrapper').querySelector('input');
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                this.setAttribute('data-lucide', type === 'password' ? 'eye' : 'eye-off');
+                lucide.createIcons();
+            });
+        });
     </script>
 </body>
 </html>

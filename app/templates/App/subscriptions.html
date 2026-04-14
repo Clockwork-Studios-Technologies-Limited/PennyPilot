@@ -78,46 +78,88 @@
     <main>
 
     <!-- LEFT COLUMN -->
-    <div class="left-col">
+  <!-- LEFT COLUMN: Monthly Income + Quick Stats (dashboard style) -->
+  <aside class="left-col">
+    <!-- Income Card (identical to dashboard) -->
+            <form action="/income/set" method="post">
+                <input type="hidden" name="next" value="{{ request.url.path }}">
+                <div class="panel income-card">
 
-        <!-- Income -->
-        <div class="panel income-card">
-            <div class="income-header">
-                <i data-lucide="dollar-sign"></i>
-                <span>Monthly Income</span>
+                    <div class="income-header">
+                        <span>MONTHLY INCOME</span>
+                    </div>
+
+                    <div class="income-sub">PRIMARY SOURCE</div>
+
+                   <div class="income-amount">
+
+                    <span id="incomeDisplay">
+                        ${{ stats.income }}
+                    </span>
+
+                    <span id="incomeEditWrap" style="display:none;">
+                        $
+                        <input 
+                        style=" background: transparent; 
+                                width: 200px; 
+                                padding: 5px; 
+                                font-size: 1.2rem; 
+                                border: 1px solid var(--border-color); 
+                                border-radius: 4px;
+                                font-size: 2.5rem;
+                                font-weight: 700;
+                                color: var(--accent-green);
+                                text-shadow: 0 0 10px var(--accent-green-glow);
+                                margin-bottom: 0.5rem;
+                                "
+
+                            id="incomeInput"
+                            type="number"
+                            name="amount"
+                            step="0.01"
+                            value="{{ income }}"
+                            class="income-input"
+                        required>
+                    </span>
+
+                </div>
+
+                    <!-- BUTTONS -->
+                    <div id="viewBtns" class="income-btn-row">
+                        <button type="button" class="btn-update" onclick="enableEdit()">
+                            UPDATE INCOME
+                        </button>
+                    </div>
+
+                    <div  id="editBtns" class="income-btn-row" style="display:none;">
+                        <button 
+                            style="background: #1d7f3e97; color: white; width:40%; margin-right: 5%; padding: 10px 20px;" 
+                            type="submit" class="btn-update">SAVE</button>
+                        <button 
+                            style="background: #7f1d1d97; color: white; width:40%; padding: 10px 20px;"
+                            type="button" class="btn-update" onclick="cancelEdit()">CANCEL</button>
+                    </div>
+
+                </div>
+            </form>
+
+            <!-- Quick Stats -->
+            <div class="panel quick-stats">
+                <div class="panel-header">Quick Stats</div>
+                <div class="stat-row">
+                    <span class="stat-label">Transactions</span>
+                    <span class="stat-value">{{ stats.transactions }}</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Active Subs</span>
+                    <span class="stat-value num-purple">{{ stats.active_subs }}</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Budget Items</span>
+                    <span class="stat-value num-yellow">{{ stats.budget_items }}</span>
+                </div>
             </div>
-
-            <div class="income-amount">$5,000</div>
-
-            <div class="income-sub">
-                <i data-lucide="sparkles"></i>
-                Primary Source
-            </div>
-
-            <button class="btn-update">UPDATE INCOME</button>
-        </div>
-
-        <!-- Quick Stats -->
-        <div class="panel quick-stats">
-            <div class="panel-header blue">Quick Stats</div>
-
-            <div class="stat-row">
-                <span class="stat-label">Transactions</span>
-                <span class="stat-value num-blue">3</span>
-            </div>
-
-            <div class="stat-row">
-                <span class="stat-label">Active Subs</span>
-                <span class="stat-value num-purple">3</span>
-            </div>
-
-            <div class="stat-row">
-                <span class="stat-label">Budget Items</span>
-                <span class="stat-value num-yellow">3</span>
-            </div>
-        </div>
-
-    </div>
+  </aside>
 
 
     <!-- CENTER COLUMN -->
@@ -138,29 +180,37 @@
         <!-- Summary Cards -->
         <div class="summary-grid">
 
-            <div class="summary-card green">
-                <div class="summary-icon"><i data-lucide="repeat"></i></div>
-                <div class="summary-label">Monthly Total</div>
-                <div class="summary-value">$37.56</div>
-            </div>
+    <div class="summary-card green">
+        <div class="summary-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+        </div>
+        <div class="summary-label">Monthly Total</div>
+        <div class="summary-value">${{ monthly_total }}</div>
+    </div>
 
-            <div class="summary-card yellow">
-                <div class="summary-icon"><i data-lucide="calendar"></i></div>
-                <div class="summary-label">Yearly Cost</div>
-                <div class="summary-value">$450.76</div>
-            </div>
+    <div class="summary-card yellow">
+        <div class="summary-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+        </div>
+        <div class="summary-label">Yearly Cost</div>
+        <div class="summary-value">${{ yearly_total }}</div>
+    </div>
 
-            <div class="summary-card blue">
-                <div class="summary-icon"><i data-lucide="clock"></i></div>
-                <div class="summary-label">Daily Avg</div>
-                <div class="summary-value">$1.25</div>
-            </div>
+    <div class="summary-card red">
+        <div class="summary-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        </div>
+        <div class="summary-label">Daily Avg</div>
+        <div class="summary-value">${{ daily_avg }}</div>
+    </div>
 
-            <div class="summary-card purple">
-                <div class="summary-icon"><i data-lucide="layers"></i></div>
-                <div class="summary-label">Active Subs</div>
-                <div class="summary-value">3</div>
-            </div>
+    <div class="summary-card purple">
+        <div class="summary-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+        </div>
+        <div class="summary-label">Active Subs</div>
+        <div class="summary-value">{{ active_count }}</div>
+    </div>
 
         </div>
 
@@ -168,48 +218,49 @@
         <div class="panel extra-padding" id="subscriptionForm" style="display:none;">
             <div class="panel-header green">Add Subscription</div>
 
-            <form class="subscription-form">
+            <form action="/subscriptions/create" method="post" class="subscription-form">
 
-                <div class="form-grid">
+            <div class="form-grid">
 
-                    <div class="form-group">
-                        <label>Service Name</label>
-                        <input type="text" placeholder="Netflix">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Amount</label>
-                        <input type="number" placeholder="0.00">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Billing Cycle</label>
-                        <select>
-                            <option>Monthly</option>
-                            <option>Yearly</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Next Billing Date</label>
-                        <input type="text" value="03/26/2026">
-                    </div>
-
-                    <div class="form-group full">
-                        <label>Category</label>
-                        <select>
-                            <option>Entertainment</option>
-                            <option>Shopping</option>
-                            <option>Music & Video</option>
-                        </select>
-                    </div>
-
+                <div class="form-group">
+                    <label>Service Name</label>
+                    <input type="text" name="service_name" input>
                 </div>
 
-                <div class="form-actions">
-                    <button class="btn-update">Save Subscription</button>
-                    <button type="button" class="btn-cancel">Cancel</button>
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="number" name="amount" step="0.01" input>
                 </div>
+
+                <div class="form-group">
+                    <label>Billing Cycle</label>
+                    <select name="billing_cycle" input>
+                        {% for c in billing_cycles %}
+                            <option value="{{ c.value }}">{{ c.value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Next Billing Date</label>
+                    <input type="date" name="next_billing_date" input>
+                </div>
+
+                <div class="form-group full">
+                    <label>Category</label>
+                    <select name="category" required>
+                        {% for c in categories %}
+                            <option value="{{ c.value }}">{{ c.value }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+                <button style="width:auto;" class="btn-update" type="submit">Save Subscription</button>
+                <button type="button" class="btn-cancel" onclick="toggleForm()">Cancel</button>
+            </div>
 
             </form>
         </div>
@@ -218,44 +269,64 @@
         <div class="panel">
             <div class="panel-header purple">Active Subscriptions</div>
 
-            <div class="expense-breakdown">
+                <div class="expense-breakdown">
 
-                <div class="expense-item">
-                    <div class="expense-info">
-                        <div class="dot purple"></div>
-                        <div>
-                            <div class="expense-name">Netflix</div>
-                            <div class="stat-label">Monthly • Next: 3/31/2026</div>
+                    {% if subs|length == 0 %}
+                        <div class="empty-state">
+                            <div class="empty-icon">📦</div>
+                            <p>No subscriptions yet. Add one above.</p>
                         </div>
-                    </div>
+                    {% endif %}
 
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <div class="expense-amount">$15.99</div>
-                        <button class="btn-delete">
-                            <i data-lucide="trash-2"></i>
+                    {% for s in subs %}
+                        <div class="expense-item">
+
+                            <div class="expense-info">
+                                <div class="dot purple"></div>
+
+                                <div>
+                                    <div class="expense-name">{{ s.service_name }}</div>
+                                    <div class="stat-label">
+                                        {{ s.billing_cycle }} • Next: {{ s.next_billing_date }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <div class="expense-amount">${{ s.amount }}</div>
+
+                                <form action="/subscriptions/delete/{{ s.id }}" method="post">
+                                    <button class="btn-delete" type="submit">Delete</button>
+                                </form>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+                <div style="margin-top: 1rem;">
+            <div class="pagination">
+                <span class="page-info">Page {{ page }} of {{ total_pages }}</span>
+
+                <div class="pagination-right">
+                    <a href="/subscriptions?page={{ page-1 if page > 1 else 1 }}">
+                        <button class="next-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                         </button>
-                    </div>
+                    </a>
+
+                    <a href="/subscriptions?page={{ page+1 if page < total_pages else total_pages }}">
+                        <button class="next-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
+                    </a>
                 </div>
-
-            </div>
-
-        </div>
-
-        <div class="panel" style="margin-top: 1rem;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-
-                <span class="stat-label">Showing 1–5 of 12</span>
-
-                <div style="display:flex; gap:5px;">
-                    <button class="btn-cancel">Prev</button>
-                    <button class="btn-update" style="width:auto;">1</button>
-                    <button class="btn-cancel">2</button>
-                    <button class="btn-cancel">3</button>
-                    <button class="btn-cancel">Next</button>
-                </div>
-
             </div>
         </div>
+        </div>
+
+        
     </div>
 
 
@@ -268,17 +339,17 @@
 
             <div class="stat-row">
                 <span>Annual Cost</span>
-                <span class="stat-value num-yellow">$450.76</span>
+                <span class="stat-value num-yellow">${{ yearly_total }}</span>
             </div>
 
             <div class="stat-row">
                 <span>Monthly Avg</span>
-                <span class="stat-value num-blue">$37.56</span>
+                <span class="stat-value num-blue">${{ monthly_total }}</span>
             </div>
 
             <div class="stat-row">
                 <span>Daily Avg</span>
-                <span class="stat-value num-green">$1.25</span>
+                <span class="stat-value num-green">${{ daily_avg }}</span>
             </div>
         </div>
 
@@ -297,6 +368,24 @@
 function toggleForm() {
     const form = document.getElementById("subscriptionForm");
     form.style.display = form.style.display === "none" ? "block" : "none";
+}
+
+function enableEdit() {
+    document.getElementById("incomeDisplay").style.display = "none";
+    document.getElementById("incomeEditWrap").style.display = "flex";
+
+    document.getElementById("viewBtns").style.display = "none";
+    document.getElementById("editBtns").style.display = "flex";
+
+    document.getElementById("incomeInput").focus();
+}
+
+function cancelEdit() {
+    document.getElementById("incomeDisplay").style.display = "block";
+    document.getElementById("incomeEditWrap").style.display = "none";
+
+    document.getElementById("viewBtns").style.display = "flex";
+    document.getElementById("editBtns").style.display = "none";
 }
 </script>
 </html>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - User Management</title>
     <link rel="stylesheet" href="/static/css/admin-panel-style.css">
+    <link rel="icon" href="/static/img/penny.png" type="image/x-icon">
 </head>
 <body>
     <header class="header">
@@ -18,13 +19,6 @@
             </div>
         </div>
         <div class="header-right">
-            <div class="user-profile">
-                <div class="avatar">O</div>
-                <div class="user-info">
-                    <span class="user-name">a</span>
-                    <span class="user-email">a@a.com</span>
-                </div>
-            </div>
             <a href="/logout">
                 <button class="logout-btn">
                     <i data-lucide="log-out"></i>
@@ -40,23 +34,23 @@
                     <i data-lucide="users" class="stat-icon"></i>
                     <span class="stat-label">TOTAL USERS</span>
                 </div>
-                <span class="stat-value">15</span>
+                <span class="stat-value">{{ total_users }}</span>
             </div>
             <div class="stat-card very-safe">
                 <span class="stat-label">VERY SAFE</span>
-                <span class="stat-value">4</span>
+                <span class="stat-value">{{ tag_counts.very_safe }}</span>
             </div>
             <div class="stat-card stable">
                 <span class="stat-label">STABLE</span>
-                <span class="stat-value">4</span>
+                <span class="stat-value">{{ tag_counts.stable }}</span>
             </div>
             <div class="stat-card risky">
                 <span class="stat-label">RISKY</span>
-                <span class="stat-value">3</span>
+                <span class="stat-value">{{ tag_counts.risky }}</span>
             </div>
             <div class="stat-card critical">
                 <span class="stat-label">CRITICAL</span>
-                <span class="stat-value">2</span>
+                <span class="stat-value">{{ tag_counts.critical }}</span>
             </div>
         </div>
 
@@ -69,7 +63,7 @@
                     </div>
                     <p>Manage user financial risk tags and accounts</p>
                 </div>
-                <span class="total-users">15 total users</span>
+                <span class="total-users">{{ total_users }} total users</span>
             </div>
 
             <table class="user-table">
@@ -78,130 +72,107 @@
                         <th>USER</th>
                         <th>EMAIL</th>
                         <th>BURN RATE</th>
-                        <th>JOINED</th>
+                        <th>INCOME</th>
                         <th>RISK TAG</th>
                         <th>ACTIONS</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-avatar">J</div>
-                            <span class="user-name">John Doe</span>
-                        </td>
-                        <td>john@example.com</td>
-                        <td><span class="burn-rate">$3,200</span> <span class="per-month">/mo</span></td>
-                        <td>2026-01-15</td>
-                        <td><span class="risk-tag stable-tag"><i data-lucide="shield-check"></i> STABLE</span></td>
-                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-avatar">J</div>
-                            <span class="user-name">Jane Smith</span>
-                        </td>
-                        <td>jane@example.com</td>
-                        <td><span class="burn-rate">$1,850</span> <span class="per-month">/mo</span></td>
-                        <td>2026-02-10</td>
-                        <td><span class="risk-tag very-safe-tag"><i data-lucide="shield-check"></i> VERY SAFE</span></td>
-                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-avatar">B</div>
-                            <span class="user-name">Bob Johnson</span>
-                        </td>
-                        <td>bob@example.com</td>
-                        <td><span class="burn-rate">$4,500</span> <span class="per-month">/mo</span></td>
-                        <td>2026-03-05</td>
-                        <td><span class="risk-tag risky-tag"><i data-lucide="alert-triangle"></i> RISKY</span></td>
-                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-avatar">A</div>
-                            <span class="user-name">Alice Williams</span>
-                        </td>
-                        <td>alice@example.com</td>
-                        <td><span class="burn-rate">$6,800</span> <span class="per-month">/mo</span></td>
-                        <td>2026-03-20</td>
-                        <td><span class="risk-tag critical-tag"><i data-lucide="alert-circle"></i> CRITICAL</span></td>
-                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-avatar">C</div>
-                            <span class="user-name">Charlie Brown</span>
-                        </td>
-                        <td>charlie@example.com</td>
-                        <td><span class="burn-rate">$2,900</span> <span class="per-month">/mo</span></td>
-                        <td>2026-03-25</td>
-                        <td><span class="risk-tag no-tag"><i data-lucide="tag"></i> NO TAG</span></td>
-                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-avatar">D</div>
-                            <span class="user-name">David Chen</span>
-                        </td>
-                        <td>david@example.com</td>
-                        <td><span class="burn-rate">$3,100</span> <span class="per-month">/mo</span></td>
-                        <td>2025-11-08</td>
-                        <td><span class="risk-tag stable-tag"><i data-lucide="shield-check"></i> STABLE</span></td>
-                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-avatar">E</div>
-                            <span class="user-name">Emma Wilson</span>
-                        </td>
-                        <td>emma@example.com</td>
-                        <td><span class="burn-rate">$1,650</span> <span class="per-month">/mo</span></td>
-                        <td>2025-12-12</td>
-                        <td><span class="risk-tag very-safe-tag"><i data-lucide="shield-check"></i> VERY SAFE</span></td>
-                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-avatar">F</div>
-                            <span class="user-name">Frank Miller</span>
-                        </td>
-                        <td>frank@example.com</td>
-                        <td><span class="burn-rate">$5,200</span> <span class="per-month">/mo</span></td>
-                        <td>2026-01-20</td>
-                        <td><span class="risk-tag risky-tag"><i data-lucide="alert-triangle"></i> RISKY</span></td>
-                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-avatar">G</div>
-                            <span class="user-name">Grace Lee</span>
-                        </td>
-                        <td>grace@example.com</td>
-                        <td><span class="burn-rate">$2,750</span> <span class="per-month">/mo</span></td>
-                        <td>2026-02-18</td>
-                        <td><span class="risk-tag stable-tag"><i data-lucide="shield-check"></i> STABLE</span></td>
-                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
-                    </tr>
-                    <tr>
-                        <td class="user-cell">
-                            <div class="user-avatar">H</div>
-                            <span class="user-name">Henry Davis</span>
-                        </td>
-                        <td>henry@example.com</td>
-                        <td><span class="burn-rate">$7,500</span> <span class="per-month">/mo</span></td>
-                        <td>2026-03-10</td>
-                        <td><span class="risk-tag critical-tag"><i data-lucide="alert-circle"></i> CRITICAL</span></td>
-                        <td><button class="delete-btn"><i data-lucide="trash-2"></i></button></td>
-                    </tr>
+                {% for u in users %}
+                <tr>
+                    <td class="user-cell">
+                        <div class="user-avatar">{{ u.username[0] | upper }}</div>
+                        <span class="user-name">{{ u.username }}</span>
+                    </td>
+
+                    <td>{{ u.email }}</td>
+
+                    <td>
+                        <span class="burn-rate">{{ u.burn_rate }}%</span>
+                    </td>
+
+                    <td>${{ "{:,.2f}".format(u.income) }}</td>
+
+                    <td>
+                        <div class="tag-selector">
+                            <!-- Display current tag -->
+                            {% if u.tag == "very_safe" %}
+                                <span class="risk-tag very-safe-tag" onclick="toggleDropdown(this)">
+                                    <i data-lucide="shield-check"></i> VERY SAFE
+                                </span>
+                            {% elif u.tag == "stable" %}
+                                <span class="risk-tag stable-tag" onclick="toggleDropdown(this)">
+                                    <i data-lucide="shield-check"></i> STABLE
+                                </span>
+                            {% elif u.tag == "risky" %}
+                                <span class="risk-tag risky-tag" onclick="toggleDropdown(this)">
+                                    <i data-lucide="alert-triangle"></i> RISKY
+                                </span>
+                            {% elif u.tag == "critical" %}
+                                <span class="risk-tag critical-tag" onclick="toggleDropdown(this)">
+                                    <i data-lucide="alert-circle"></i> CRITICAL
+                                </span>
+                            {% else %}
+                                <span class="risk-tag no-tag" onclick="toggleDropdown(this)">
+                                    <i data-lucide="tag"></i> NO TAG
+                                </span>
+                            {% endif %}
+
+                            <!-- Dropdown menu -->
+                            <div class="tag-dropdown">
+                                <form method="POST" action="/admin/user/tag">
+                                    <input  type="hidden" name="user_id" value="{{ u.id }}">
+                                    
+                                    <button type="submit" name="tag" value="very_safe" class="tag-option very-safe-option">
+                                        <i data-lucide="shield-check"></i> VERY SAFE
+                                    </button>
+                                    <button type="submit" name="tag" value="stable" class="tag-option stable-option">
+                                        <i data-lucide="shield-check"></i> STABLE
+                                    </button>
+                                    <button type="submit" name="tag" value="risky" class="tag-option risky-option">
+                                        <i data-lucide="alert-triangle"></i> RISKY
+                                    </button>
+                                    <button type="submit" name="tag" value="critical" class="tag-option critical-option">
+                                        <i data-lucide="alert-circle"></i> CRITICAL
+                                    </button>
+                                    <button type="submit" name="tag" value="no_tag" class="tag-option no-tag-option">
+                                        <i data-lucide="tag"></i> NO TAG
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <form method="POST" action="/admin/user/delete">
+                            <input type="hidden" name="user_id" value="{{ u.id }}">
+                            <button class="delete-btn" type="submit">
+                                <i data-lucide="trash-2"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
                 </tbody>
             </table>
 
             <div class="pagination">
-                <span class="page-info">Page 1 of 2</span>
+                <span class="page-info">
+                    Page {{ page }} of {{ total_pages }}
+                </span>
+
                 <div class="pagination-right">
-                    <span class="showing">1-10 of 15</span>
-                    <button class="next-btn"><i data-lucide="chevron-right"></i></button>
+                    <span class="showing">
+                        {{ (page-1)*10 + 1 }}-{{ page*10 }} of {{ total_users }}
+                    </span>
+
+                    <a href="?page={{ page-1 if page > 1 else 1 }}">
+                        <button class="next-btn"><i data-lucide="chevron-left"></i></button>
+                    </a>
+
+                    <a href="?page={{ page+1 if page < total_pages else total_pages }}">
+                        <button class="next-btn"><i data-lucide="chevron-right"></i></button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -210,6 +181,58 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         lucide.createIcons();
+
+        // Assign random colors to user avatars
+        const colors = [
+            '#3b82f6', // blue
+            '#ef4444', // red
+            '#10b981', // green
+            '#f59e0b', // amber
+            '#8b5cf6', // purple
+            '#ec4899', // pink
+            '#06b6d4', // cyan
+            '#f97316', // orange
+            '#6366f1', // indigo
+            '#14b8a6', // teal
+            '#a855f7', // violet
+            '#d946ef', // fuchsia
+        ];
+
+        document.querySelectorAll('.user-avatar').forEach((avatar, index) => {
+            const randomColor = colors[index % colors.length];
+            avatar.style.setProperty('--avatar-color', randomColor);
+        });
+
+        function toggleDropdown(element) {
+            const selector = element.parentElement;
+            const dropdown = selector.querySelector('.tag-dropdown');
+            
+            // Close all other dropdowns first
+            document.querySelectorAll('.tag-dropdown').forEach(d => {
+                if (d !== dropdown) d.style.display = 'none';
+            });
+            
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                // Calculate position
+                const rect = element.getBoundingClientRect();
+                dropdown.style.display = 'block';
+                dropdown.style.top = (rect.bottom + 8) + 'px';
+                dropdown.style.left = rect.left + 'px';
+                dropdown.style.minWidth = Math.max(180, rect.width) + 'px';
+                lucide.createIcons(); // Recreate icons for the dropdown
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.tag-selector') && !event.target.closest('.tag-option')) {
+                document.querySelectorAll('.tag-dropdown').forEach(dropdown => {
+                    dropdown.style.display = 'none';
+                });
+            }
+        });
     </script>
 </body>
 </html>
