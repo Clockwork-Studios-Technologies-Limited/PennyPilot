@@ -5,30 +5,6 @@ from app.dependencies.session import SessionDep
 from . import router
 
 
-# @router.get("/", response_class=RedirectResponse)
-# async def index_view(
-#     request: Request,
-#     user_logged_in: IsUserLoggedIn,
-#     db: SessionDep
-# ):
-#     if user_logged_in:
-#         user = await get_current_user(request, db)
-
-#         if await is_admin(user):
-#             return RedirectResponse(
-#                 url=request.url_for("admin_home_view"),
-#                 status_code=status.HTTP_303_SEE_OTHER
-#             )
-
-#         return RedirectResponse(
-#             url=request.url_for("dashboard_view"),
-#             status_code=status.HTTP_303_SEE_OTHER
-#         )
-
-#     return RedirectResponse(
-#         url=request.url_for("login_view"),
-#         status_code=status.HTTP_303_SEE_OTHER
-#     )
 
 @router.get("/", response_class=RedirectResponse)
 async def index_view(
