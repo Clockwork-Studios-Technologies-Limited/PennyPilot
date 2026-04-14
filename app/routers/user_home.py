@@ -6,18 +6,6 @@ from app.dependencies.auth import AuthDep, IsUserLoggedIn, get_current_user, is_
 from app.services.dashboard_data import get_dashboard_data
 from . import router, templates
 
-
-# @router.get("/dashboard", response_class=HTMLResponse)
-# async def dashboard_view(
-#     request: Request,
-#     user: AuthDep,
-#     db: SessionDep
-# ):
-#     return templates.TemplateResponse(
-#         request=request,
-#         name="App/dashboard.html",
-#         context={"user": user}
-#     )
 from sqlmodel import select
 from app.models.user import Expense, Subscription, Budget
 
@@ -86,17 +74,6 @@ async def dashboard_view(
         }
     )
     
-# @router.get("/expenses", response_class=HTMLResponse)
-# async def expenses_view(
-#     request: Request,
-#     user: AuthDep,
-#     db: SessionDep
-# ):
-#     return templates.TemplateResponse(
-#         request=request,
-#         name="App/expenses.html",
-#         context={"user": user}
-#     )
 from sqlmodel import select
 from app.models.user import Expense, Category
 from sqlalchemy import func
@@ -156,18 +133,6 @@ async def expenses_view(
         }
     )
 
-
-# @router.get("/subscriptions", response_class=HTMLResponse)
-# async def subscriptions_view(
-#     request: Request,
-#     user: AuthDep,
-#     db: SessionDep
-# ):
-#     return templates.TemplateResponse(
-#         request=request,
-#         name="App/subscriptions.html",
-#         context={"user": user}
-#     )
 from sqlmodel import select
 from app.models.user import Subscription, BillingCycle
 
@@ -232,21 +197,6 @@ async def subscriptions_view(
         }
     )
     
-    
-    
-# @router.get("/budgets", response_class=HTMLResponse)
-# async def budget_view(
-#     request: Request,
-#     user: AuthDep,
-#     db: SessionDep
-# ):
-#     return templates.TemplateResponse(
-#         request=request,
-#         name="App/budget.html",
-#         context={
-#             "user": user
-#         }
-#     )
 from sqlmodel import select
 from app.models.user import Budget, Expense, Subscription, Category
 
