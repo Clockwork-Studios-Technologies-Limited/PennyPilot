@@ -219,17 +219,17 @@
 
                 <div class="form-group">
                     <label>Service Name</label>
-                    <input type="text" name="service_name" input>
+                    <input type="text" name="service_name" required>
                 </div>
 
                 <div class="form-group">
                     <label>Amount</label>
-                    <input type="number" name="amount" step="0.01" input>
+                    <input type="number" name="amount" step="0.01" required>
                 </div>
 
                 <div class="form-group">
                     <label>Billing Cycle</label>
-                    <select name="billing_cycle" input>
+                    <select name="billing_cycle" required>
                         {% for c in billing_cycles %}
                             <option value="{{ c.value }}">{{ c.value }}</option>
                         {% endfor %}
@@ -238,7 +238,7 @@
 
                 <div class="form-group">
                     <label>Next Billing Date</label>
-                    <input type="date" name="next_billing_date" input>
+                    <input type="date" name="next_billing_date" required>
                 </div>
 
                 <div class="form-group full">
